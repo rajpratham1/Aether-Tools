@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 Smart Hub: Weather, AQI, Clock & Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="https://openweathermap.org/img/wn/04d@2x.png">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>🌐 Smart Hub: Weather, AQI & Tools</h1>
+
+            <div class="theme-toggle-section">
+                <button id="themeToggle">☀️ / 🌙 Toggle Theme</button>
+            </div>
+
+            <div class="section weather-aqi-section">
+                <h2>Weather & Air Quality</h2>
+                <div class="search-section">
+                    <input type="text" id="cityInput" placeholder="Enter City Name">
+                    <button onclick="getWeatherByCity()">Search</button>
+                    <button onclick="getLocationWeather()">📍 Current Location</button>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+                <div class="results-container">
+                    <div id="weatherResult" class="weather-card">
+                        <h3>Current Weather</h3>
+                        <div class="weather-details">
+                            <p>City: <span id="weatherCity">--</span></p>
+                            <img id="weatherIcon" src="" alt="Weather Icon" class="hidden">
+                            <p class="temperature"><span id="temp">--</span>°C</p>
+                            <p>Condition: <span id="condition">--</span></p>
+                            <p>Humidity: <span id="humidity">--</span>%</p>
+                            <p>Wind Speed: <span id="wind">--</span> m/s</p>
+                            <p id="rainfallParagraph" class="hidden-detail">Rainfall (last 1/3h): <span id="rainfall">--</span> mm</p>
+                            <p>Pressure: <span id="pressure">--</span> hPa</p>
+                        </div>
+                    </div>
+                    <div id="aqiResult" class="aqi-card">
+                        <h3>Air Quality Index (AQI)</h3>
+                        <div class="aqi-details">
+                            <p>AQI Level: <span id="aqiLevel">--</span> <span id="aqiStatus"></span></p>
+                            <div class="aqi-components">
+                                <p>PM2.5: <span id="pm2_5">--</span> µg/m³</p>
+                                <p>PM10: <span id="pm10">--</span> µg/m³</p>
+                                <p>CO: <span id="co">--</span> µg/m³</p>
+                                <p>NO2: <span id="no2">--</span> µg/m³</p>
+                                <p>O3: <span id="o3">--</span> µg/m³</p>
+                                <p>SO2: <span id="so2">--</span> µg/m³</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section digital-clock-section">
+                <h2>Current Time & Date</h2>
+                <div class="clock-display">
+                    <p id="displayTime" class="large-text">--:--:--</p>
+                    <p id="displayDate" class="medium-text">--</p>
+                    <p id="displayDay" class="medium-text">--</p>
+                </div>
+            </div>
+
+            <div class="section tools-section">
+                <div class="tool-card stopwatch-card">
+                    <h3>Stopwatch</h3>
+                    <p id="stopwatchDisplay" class="large-text">00:00:00.000</p>
+                    <div class="stopwatch-controls">
+                        <button id="startStopwatch">Start</button>
+                        <button id="stopStopwatch">Stop</button>
+                        <button id="resetStopwatch">Reset</button>
+                    </div>
+                </div>
+
+                <div class="tool-card alarm-card">
+                    <h3>Alarm Clock</h3>
+                    <div class="alarm-set-input">
+                        <input type="number" id="alarmHour" min="1" max="12" placeholder="HH"> :
+                        <input type="number" id="alarmMinute" min="0" max="59" placeholder="MM">
+                        <select id="alarmAmPm">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                    <div class="alarm-controls">
+                        <button id="setAlarm">Set Alarm</button>
+                        <button id="clearAlarm">Clear Alarm</button>
+                    </div>
+                    <p id="alarmStatus" class="medium-text">No alarm set</p>
+                    <audio id="alarmTone" loop></audio> </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
