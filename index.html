@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aether Tools | Ultimate Hub</title>
+    <title>Aether Tools | Ultra Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
 
@@ -130,9 +130,12 @@
         .main-content {
             flex: 1;
             padding: 40px;
+            padding-bottom: 10px;
             overflow-y: auto;
             position: relative;
             scroll-behavior: smooth;
+            display: flex;
+            flex-direction: column;
         }
 
         .header {
@@ -162,14 +165,13 @@
             line-height: 1;
         }
 
-        /* --- GRID SYSTEM (Responsive) --- */
+        /* --- GRID SYSTEM --- */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
         }
 
-        /* CARD STYLES */
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(25px);
@@ -183,7 +185,6 @@
             animation: slideUp 0.5s ease;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0,0,0,0.15);
@@ -201,251 +202,117 @@
         }
 
         /* --- WEATHER & AQI DETAILS --- */
-        .weather-search-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        .weather-top-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .weather-icon-large {
-            width: 100px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            animation: float 3s ease-in-out infinite;
-        }
-        .weather-temp-large {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-        
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.95rem;
-        }
+        .weather-search-container { margin-bottom: 20px; display: flex; gap: 10px; }
+        .weather-top-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+        .weather-icon-large { width: 100px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); animation: float 3s ease-in-out infinite; }
+        .weather-temp-large { font-size: 3.5rem; font-weight: 700; color: var(--text-main); }
+        .detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem; }
         .detail-row span:first-child { color: var(--text-muted); }
         .detail-row span:last-child { font-weight: 600; color: var(--text-main); }
-        
         .aqi-header-large { text-align: center; margin-bottom: 15px; }
         .aqi-score { font-size: 2.5rem; font-weight: bold; display: block; }
-        .aqi-status {
-            padding: 4px 12px;
-            border-radius: 20px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
+        .aqi-status { padding: 4px 12px; border-radius: 20px; color: white; font-size: 0.9rem; font-weight: 600; }
 
-        /* --- ALARM CLOCK (NEW) --- */
-        .alarm-inputs {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .alarm-inputs input {
-            width: 70px;
-            text-align: center;
-            font-size: 1.5rem;
-            padding: 10px;
-        }
-        .alarm-inputs span { font-size: 2rem; font-weight: bold; }
-        .alarm-status {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: 600;
-            color: var(--accent);
-            min-height: 20px;
-        }
+        /* --- TOOLS (Alarm, Calc, Calendar) --- */
+        .alarm-inputs { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 20px 0; }
+        .alarm-inputs input { width: 70px; text-align: center; font-size: 1.5rem; padding: 10px; }
+        .alarm-status { text-align: center; margin-top: 15px; font-weight: 600; color: var(--accent); min-height: 20px; }
 
-        /* --- CALENDAR (NEW) --- */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            text-align: center;
-            margin-top: 10px;
-        }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-top: 10px; }
         .cal-day-name { font-weight: bold; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px;}
-        .cal-day {
-            padding: 8px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            cursor: default;
-        }
-        .cal-day.today {
-            background: var(--accent-grad);
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
-        }
+        .cal-day { padding: 8px; border-radius: 8px; font-size: 0.9rem; cursor: default; }
+        .cal-day.today { background: var(--accent-grad); color: white; font-weight: bold; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4); }
 
-        /* --- CALCULATOR --- */
-        .calc-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .calc-display {
-            grid-column: span 4;
-            background: rgba(0,0,0,0.2);
-            color: var(--text-main);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: right;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            height: 50px;
-        }
-        .calc-btn {
-            background: rgba(255,255,255,0.1);
-            border: var(--glass-border);
-            color: var(--text-main);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.1s;
-        }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .calc-display { grid-column: span 4; background: rgba(0,0,0,0.2); color: var(--text-main); padding: 15px; border-radius: 10px; text-align: right; font-size: 1.5rem; margin-bottom: 10px; height: 50px; }
+        .calc-btn { background: rgba(255,255,255,0.1); border: var(--glass-border); color: var(--text-main); padding: 15px; border-radius: 10px; font-size: 1.1rem; cursor: pointer; transition: 0.1s; }
         .calc-btn:active { transform: scale(0.95); }
         .calc-btn.op { background: rgba(108, 92, 231, 0.2); color: var(--accent); }
         .calc-btn.eq { background: var(--accent-grad); color: white; grid-column: span 2; }
 
-        /* --- FOCUS / POMODORO --- */
-        .pomo-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
+        /* --- NEW TOOLS STYLING --- */
+        .password-display {
+            background: rgba(0,0,0,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 15px;
+            word-break: break-all;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+        .converter-group { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+        .converter-group input { flex: 1; }
+        .converter-group span { font-weight: bold; color: var(--text-muted); }
+
+        /* QR Code & Color Picker */
+        .qr-wrapper { text-align: center; }
+        .qr-img { margin-top: 15px; border-radius: 10px; border: 5px solid white; display: none; }
+        .qr-img.show { display: inline-block; animation: fadeIn 0.5s; }
+        
+        .color-picker-wrapper { display: flex; align-items: center; gap: 15px; }
+        .color-input { width: 50px; height: 50px; border-radius: 10px; border: none; cursor: pointer; padding: 0; overflow: hidden; }
+        .color-details { flex: 1; }
+        .color-code { font-family: monospace; font-size: 1.1rem; margin-bottom: 5px; }
+        
+        .text-analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .stat-box { background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; text-align: center; }
+        .stat-val { font-size: 1.2rem; font-weight: bold; display: block; }
+        .stat-label { font-size: 0.8rem; opacity: 0.7; }
+
+        /* --- FOCUS / NOTES --- */
+        .pomo-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; }
         .timer-circle { position: relative; width: 150px; height: 150px; }
         .timer-circle svg { width: 150px; height: 150px; transform: rotate(-90deg); }
         .timer-circle circle { fill: none; stroke-width: 8; stroke-linecap: round; }
         .circle-bg { stroke: rgba(255,255,255,0.1); }
-        .circle-progress { 
-            stroke: var(--accent); 
-            stroke-dasharray: 440; 
-            stroke-dashoffset: 0;
-            transition: stroke-dashoffset 1s linear;
-        }
-        .timer-text {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            font-weight: 700;
-        }
-        .pomo-controls { margin-top: 20px; display: flex; gap: 10px; }
+        .circle-progress { stroke: var(--accent); stroke-dasharray: 440; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
+        .timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; font-weight: 700; }
+        .note-area { width: 100%; height: 150px; background: transparent; border: none; resize: none; color: var(--text-main); font-size: 1rem; outline: none; line-height: 1.5; }
 
-        /* --- STICKY NOTES --- */
-        .note-area {
-            width: 100%;
-            height: 150px;
-            background: transparent;
-            border: none;
-            resize: none;
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-            line-height: 1.5;
+        /* --- FOOTER --- */
+        .main-footer {
+            margin-top: auto;
+            padding-top: 30px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-        
+        .main-footer p {
+            background: rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        body.dark-mode .main-footer p { background: rgba(0, 0, 0, 0.3); }
+
         /* Inputs & Buttons */
-        input, select {
-            width: 100%;
-            padding: 10px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.2);
-            color: var(--text-main);
-            outline: none;
-            font-family: inherit;
-        }
-        button.primary-btn {
-            background: var(--accent-grad);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            white-space: nowrap;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        button.secondary-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: var(--text-main);
-            padding: 10px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            white-space: nowrap;
-        }
+        input, select, textarea { width: 100%; padding: 10px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.2); color: var(--text-main); outline: none; font-family: inherit; }
+        button.primary-btn { background: var(--accent-grad); border: none; color: white; padding: 10px 20px; border-radius: 12px; cursor: pointer; white-space: nowrap; font-weight: 500; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        button.secondary-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: var(--text-main); padding: 10px 20px; border-radius: 12px; cursor: pointer; white-space: nowrap; }
         button:hover { transform: translateY(-2px); }
-        button:active { transform: translateY(0); }
 
-        /* --- PAGES/TABS LOGIC --- */
         .page-section { display: none; }
         .page-section.active { display: block; animation: fadeIn 0.4s; }
-
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* --- RESPONSIVE DESIGN --- */
-        
-        /* Tablet & Mobile */
-        @media (max-width: 900px) {
-            .bento-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-        }
-
-        /* Mobile Only */
+        /* Mobile */
         @media (max-width: 768px) {
             body { flex-direction: column; overflow: auto; height: auto; min-height: 100vh; }
-            
-            /* Bottom Navigation Bar for Mobile */
-            .sidebar { 
-                width: 100%; 
-                flex-direction: row; 
-                padding: 10px 20px; 
-                position: fixed; 
-                bottom: 0; 
-                left: 0;
-                height: 70px;
-                border-top: var(--glass-border);
-                border-right: none;
-                justify-content: space-around;
-                align-items: center;
-                background: rgba(255, 255, 255, 0.9); /* More opaque for mobile nav */
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
-            }
+            .sidebar { width: 100%; flex-direction: row; padding: 10px 20px; position: fixed; bottom: 0; left: 0; height: 70px; border-top: var(--glass-border); border-right: none; justify-content: space-around; align-items: center; background: rgba(255, 255, 255, 0.9); box-shadow: 0 -4px 20px rgba(0,0,0,0.1); }
             body.dark-mode .sidebar { background: rgba(20, 20, 30, 0.9); }
-
             .logo, .sidebar-footer, .nav-item span { display: none; }
             .nav-links { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; }
             .nav-item { padding: 12px; font-size: 1.4rem; border-radius: 50%; }
-            .nav-item:hover { transform: none; }
-            
-            /* Main Content Adjustments */
-            .main-content { padding: 20px; padding-bottom: 90px; } /* Extra padding for bottom nav */
+            .main-content { padding: 20px; padding-bottom: 90px; }
             .header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .date-display { text-align: left; }
-            
-            /* Grid becomes single column */
             .bento-grid { grid-template-columns: 1fr; }
-            
-            /* Adjust large text */
             .weather-temp-large { font-size: 3rem; }
-            .time-large { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -487,7 +354,6 @@
         </header>
 
         <div id="dashboard" class="page-section active">
-            
             <div class="weather-search-container">
                 <input type="text" id="cityInput" placeholder="Enter City Name...">
                 <button class="primary-btn" onclick="getWeather()"><i class="fa-solid fa-search"></i> Search</button>
@@ -495,67 +361,35 @@
             </div>
 
             <div class="bento-grid">
-                
                 <div class="card">
                     <h2>Current Weather <i class="fa-solid fa-cloud-sun"></i></h2>
-                    
                     <div class="weather-top-section">
                         <img id="weatherIcon" src="" alt="icon" class="weather-icon-large">
                         <div class="weather-temp-large" id="temp">--°C</div>
                         <div id="condition" style="font-size: 1.2rem; text-transform: capitalize; opacity: 0.8;">Condition</div>
                         <div style="font-size: 1rem; margin-top: 5px; opacity: 0.6;"><i class="fa-solid fa-city"></i> <span id="cityName">--</span></div>
                     </div>
-
                     <div class="weather-details-list">
-                        <div class="detail-row">
-                            <span>Humidity</span>
-                            <span id="humidity">--%</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>Wind Speed</span>
-                            <span id="wind">-- m/s</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>Pressure</span>
-                            <span id="pressure">-- hPa</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>Rainfall (1h)</span>
-                            <span id="rain">-- mm</span>
-                        </div>
+                        <div class="detail-row"><span>Humidity</span><span id="humidity">--%</span></div>
+                        <div class="detail-row"><span>Wind Speed</span><span id="wind">-- m/s</span></div>
+                        <div class="detail-row"><span>Pressure</span><span id="pressure">-- hPa</span></div>
+                        <div class="detail-row"><span>Rainfall (1h)</span><span id="rain">-- mm</span></div>
                     </div>
                 </div>
 
                 <div class="card">
                     <h2>Air Quality Index (AQI) <i class="fa-solid fa-lungs"></i></h2>
-                    
                     <div class="aqi-header-large">
                         <div style="font-size: 1rem; opacity: 0.7; margin-bottom: 5px;">AQI Level</div>
                         <span class="aqi-score" id="aqiScore">--</span>
                         <span class="aqi-status" id="aqiStatusText" style="background: #ccc;">Unknown</span>
                     </div>
-
                     <div class="weather-details-list">
-                        <div class="detail-row">
-                            <span>PM 2.5</span>
-                            <span id="pm25">-- µg/m³</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>PM 10</span>
-                            <span id="pm10">-- µg/m³</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>CO (Carbon Monoxide)</span>
-                            <span id="co">-- µg/m³</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>NO2 (Nitrogen Dioxide)</span>
-                            <span id="no2">-- µg/m³</span>
-                        </div>
-                        <div class="detail-row">
-                            <span>O3 (Ozone)</span>
-                            <span id="o3">-- µg/m³</span>
-                        </div>
+                        <div class="detail-row"><span>PM 2.5</span><span id="pm25">-- µg/m³</span></div>
+                        <div class="detail-row"><span>PM 10</span><span id="pm10">-- µg/m³</span></div>
+                        <div class="detail-row"><span>CO</span><span id="co">-- µg/m³</span></div>
+                        <div class="detail-row"><span>NO2</span><span id="no2">-- µg/m³</span></div>
+                        <div class="detail-row"><span>O3</span><span id="o3">-- µg/m³</span></div>
                     </div>
                 </div>
 
@@ -563,10 +397,7 @@
                     <h2>Zen Focus <i class="fa-solid fa-bullseye"></i></h2>
                     <div class="pomo-wrapper">
                         <div class="timer-circle">
-                            <svg>
-                                <circle class="circle-bg" cx="75" cy="75" r="70"></circle>
-                                <circle class="circle-progress" id="pomoRing" cx="75" cy="75" r="70"></circle>
-                            </svg>
+                            <svg><circle class="circle-bg" cx="75" cy="75" r="70"></circle><circle class="circle-progress" id="pomoRing" cx="75" cy="75" r="70"></circle></svg>
                             <div class="timer-text" id="pomoTime">25:00</div>
                         </div>
                         <div class="pomo-controls">
@@ -582,10 +413,8 @@
                         <input type="text" id="taskInput" placeholder="Add task...">
                         <button class="primary-btn" onclick="addTask()"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <ul id="taskList" style="list-style: none; overflow-y: auto; max-height: 250px;">
-                        </ul>
+                    <ul id="taskList" style="list-style: none; overflow-y: auto; max-height: 250px;"></ul>
                 </div>
-
             </div>
         </div>
 
@@ -593,16 +422,78 @@
             <div class="bento-grid">
                 
                 <div class="card">
+                    <h2>Password Gen <i class="fa-solid fa-key"></i></h2>
+                    <div class="password-display" id="passDisplay">Hit Generate</div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-size: 0.9rem;">Length: <span id="passLenVal">12</span></label>
+                        <input type="range" id="passLen" min="6" max="32" value="12" oninput="document.getElementById('passLenVal').textContent = this.value">
+                    </div>
+                    <button class="primary-btn" style="width: 100%;" onclick="generatePass()">Generate Secure Password</button>
+                </div>
+
+                <div class="card">
+                    <h2>Unit Converter <i class="fa-solid fa-scale-balanced"></i></h2>
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 5px; color: var(--accent);">Length (Meters ↔ Feet)</h3>
+                        <div class="converter-group">
+                            <input type="number" id="inputM" placeholder="Meters" oninput="convertLen('m')">
+                            <span>=</span>
+                            <input type="number" id="inputFt" placeholder="Feet" oninput="convertLen('ft')">
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 5px; color: var(--accent);">Weight (Kg ↔ Lbs)</h3>
+                        <div class="converter-group">
+                            <input type="number" id="inputKg" placeholder="Kg" oninput="convertWeight('kg')">
+                            <span>=</span>
+                            <input type="number" id="inputLbs" placeholder="Lbs" oninput="convertWeight('lbs')">
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <h2>QR Code Gen <i class="fa-solid fa-qrcode"></i></h2>
+                    <div class="qr-wrapper">
+                        <input type="text" id="qrInput" placeholder="Enter link or text..." style="margin-bottom: 10px;">
+                        <button class="primary-btn" onclick="generateQR()" style="width: 100%;">Create QR Code</button>
+                        <img id="qrImage" class="qr-img" src="" alt="QR Code">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Text Analytics <i class="fa-solid fa-align-left"></i></h2>
+                    <textarea id="analyzeInput" placeholder="Type or paste text..." style="height: 100px; resize: none;" oninput="analyzeText()"></textarea>
+                    <div class="text-analytics-grid">
+                        <div class="stat-box">
+                            <span class="stat-val" id="wordCount">0</span>
+                            <span class="stat-label">Words</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val" id="charCount">0</span>
+                            <span class="stat-label">Chars</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Color Studio <i class="fa-solid fa-palette"></i></h2>
+                    <div class="color-picker-wrapper">
+                        <input type="color" class="color-input" id="colorInput" value="#6c5ce7" oninput="updateColor()">
+                        <div class="color-details">
+                            <div class="color-code" id="hexDisplay">#6c5ce7</div>
+                            <div class="color-code" id="rgbDisplay" style="font-size: 0.9rem; opacity: 0.7;">rgb(108, 92, 231)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
                     <h2>Alarm Clock <i class="fa-regular fa-clock"></i></h2>
                     <div style="text-align: center; margin-top: 20px;">
                         <div class="alarm-inputs">
                             <input type="number" id="alarmH" min="1" max="12" placeholder="HH">
                             <span>:</span>
                             <input type="number" id="alarmM" min="0" max="59" placeholder="MM">
-                            <select id="alarmAP" style="width: 80px;">
-                                <option value="AM">AM</option>
-                                <option value="PM">PM</option>
-                            </select>
+                            <select id="alarmAP" style="width: 80px;"><option value="AM">AM</option><option value="PM">PM</option></select>
                         </div>
                         <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                             <button class="primary-btn" onclick="setAlarm()">Set Alarm</button>
@@ -614,16 +505,11 @@
 
                 <div class="card">
                     <h2>Calendar <i class="fa-regular fa-calendar-days"></i></h2>
-                    <div id="currentMonthYear" style="text-align: center; font-weight: bold; margin: 10px 0; font-size: 1.2rem; color: var(--accent);">November 2024</div>
+                    <div id="currentMonthYear" style="text-align: center; font-weight: bold; margin: 10px 0; font-size: 1.2rem; color: var(--accent);"></div>
                     <div class="calendar-grid">
-                        <div class="cal-day-name">Sun</div>
-                        <div class="cal-day-name">Mon</div>
-                        <div class="cal-day-name">Tue</div>
-                        <div class="cal-day-name">Wed</div>
-                        <div class="cal-day-name">Thu</div>
-                        <div class="cal-day-name">Fri</div>
-                        <div class="cal-day-name">Sat</div>
-                        </div>
+                        <div class="cal-day-name">Sun</div><div class="cal-day-name">Mon</div><div class="cal-day-name">Tue</div><div class="cal-day-name">Wed</div>
+                        <div class="cal-day-name">Thu</div><div class="cal-day-name">Fri</div><div class="cal-day-name">Sat</div>
+                    </div>
                     <div id="calendarDays" class="calendar-grid"></div>
                 </div>
 
@@ -631,24 +517,15 @@
                     <h2>Calculator <i class="fa-solid fa-calculator"></i></h2>
                     <div class="calc-grid">
                         <div class="calc-display" id="calcDisplay">0</div>
-                        <button class="calc-btn op" onclick="calcClear()">C</button>
-                        <button class="calc-btn op" onclick="calcInput('/')">÷</button>
-                        <button class="calc-btn op" onclick="calcInput('*')">×</button>
-                        <button class="calc-btn op" onclick="calcDel()"><i class="fa-solid fa-delete-left"></i></button>
-                        <button class="calc-btn" onclick="calcInput('7')">7</button>
-                        <button class="calc-btn" onclick="calcInput('8')">8</button>
-                        <button class="calc-btn" onclick="calcInput('9')">9</button>
-                        <button class="calc-btn op" onclick="calcInput('-')">-</button>
-                        <button class="calc-btn" onclick="calcInput('4')">4</button>
-                        <button class="calc-btn" onclick="calcInput('5')">5</button>
-                        <button class="calc-btn" onclick="calcInput('6')">6</button>
-                        <button class="calc-btn op" onclick="calcInput('+')">+</button>
-                        <button class="calc-btn" onclick="calcInput('1')">1</button>
-                        <button class="calc-btn" onclick="calcInput('2')">2</button>
-                        <button class="calc-btn" onclick="calcInput('3')">3</button>
-                        <button class="calc-btn eq" onclick="calcResult()">=</button>
-                        <button class="calc-btn" onclick="calcInput('0')" style="grid-column: span 2;">0</button>
-                        <button class="calc-btn" onclick="calcInput('.')">.</button>
+                        <button class="calc-btn op" onclick="calcClear()">C</button><button class="calc-btn op" onclick="calcInput('/')">÷</button>
+                        <button class="calc-btn op" onclick="calcInput('*')">×</button><button class="calc-btn op" onclick="calcDel()">del</button>
+                        <button class="calc-btn" onclick="calcInput('7')">7</button><button class="calc-btn" onclick="calcInput('8')">8</button>
+                        <button class="calc-btn" onclick="calcInput('9')">9</button><button class="calc-btn op" onclick="calcInput('-')">-</button>
+                        <button class="calc-btn" onclick="calcInput('4')">4</button><button class="calc-btn" onclick="calcInput('5')">5</button>
+                        <button class="calc-btn" onclick="calcInput('6')">6</button><button class="calc-btn op" onclick="calcInput('+')">+</button>
+                        <button class="calc-btn" onclick="calcInput('1')">1</button><button class="calc-btn" onclick="calcInput('2')">2</button>
+                        <button class="calc-btn" onclick="calcInput('3')">3</button><button class="calc-btn eq" onclick="calcResult()">=</button>
+                        <button class="calc-btn" onclick="calcInput('0')" style="grid-column: span 2;">0</button><button class="calc-btn" onclick="calcInput('.')">.</button>
                     </div>
                 </div>
 
@@ -673,282 +550,161 @@
             </div>
         </div>
 
+        <footer class="main-footer">
+            <p>
+                &copy; 2024 Aether Tools. Designed with <i class="fa-solid fa-heart" style="color: #ff7675;"></i>
+            </p>
+        </footer>
+
     </main>
 
     <script>
-        // --- 1. THEME & NAV ---
+        // --- CORE & THEME ---
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
+        if(localStorage.getItem('theme') === 'dark') { body.classList.add('dark-mode'); themeToggle.classList.remove('light-mode'); }
+        themeToggle.addEventListener('click', () => { body.classList.toggle('dark-mode'); body.classList.toggle('light-mode'); localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light'); });
+        function showPage(pid) { document.querySelectorAll('.page-section').forEach(e => e.classList.remove('active')); document.getElementById(pid).classList.add('active'); document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active')); event.currentTarget.classList.add('active'); }
         
-        if(localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            themeToggle.classList.remove('light-mode');
-        }
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode'); 
-            const isDark = body.classList.contains('dark-mode');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-
-        // --- 2. USER & CLOCK ---
+        // --- USER & CLOCK ---
         const userNameEl = document.getElementById('userName');
-        if(localStorage.getItem('aetherUser')) {
-            userNameEl.textContent = localStorage.getItem('aetherUser');
-        }
-        userNameEl.addEventListener('input', () => {
-            localStorage.setItem('aetherUser', userNameEl.textContent);
-        });
-
+        if(localStorage.getItem('aetherUser')) userNameEl.textContent = localStorage.getItem('aetherUser');
+        userNameEl.addEventListener('input', () => localStorage.setItem('aetherUser', userNameEl.textContent));
         function updateClock() {
             const now = new Date();
             document.getElementById('clock').textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             document.getElementById('date').textContent = now.toLocaleDateString([], {weekday: 'long', month: 'long', day: 'numeric'});
-            
             const hr = now.getHours();
-            let greet = "Evening";
-            if(hr < 12) greet = "Morning";
-            else if(hr < 18) greet = "Afternoon";
-            document.getElementById('timeGreeting').textContent = greet;
+            document.getElementById('timeGreeting').textContent = hr < 12 ? "Morning" : hr < 18 ? "Afternoon" : "Evening";
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateClock, 1000); updateClock();
 
-        // --- 3. WEATHER (Detailed) ---
+        // --- WEATHER & AQI ---
         const API_KEY = '400fe231827dcfb7820a4bae569869d1';
         const cityInput = document.getElementById('cityInput');
-
-        async function fetchWeather(query, lat = null, lon = null) {
+        async function fetchWeather(q, lat, lon) {
             try {
-                let url = lat && lon ? 
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}` : 
-                    `https://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=${API_KEY}`;
-
+                let url = lat ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}` : `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&appid=${API_KEY}`;
                 const res = await fetch(url);
                 if(!res.ok) throw new Error("City not found");
                 const data = await res.json();
-                
-                // Weather
                 document.getElementById('temp').textContent = Math.round(data.main.temp) + "°C";
                 document.getElementById('cityName').textContent = data.name;
                 document.getElementById('condition').textContent = data.weather[0].description;
                 document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-                
                 document.getElementById('humidity').textContent = data.main.humidity + "%";
                 document.getElementById('wind').textContent = data.wind.speed + " m/s";
                 document.getElementById('pressure').textContent = data.main.pressure + " hPa";
-                const rainfall = data.rain ? (data.rain['1h'] || 0) : 0;
-                document.getElementById('rain').textContent = rainfall > 0 ? rainfall + " mm" : "--";
-
+                document.getElementById('rain').textContent = data.rain ? (data.rain['1h'] || 0) + " mm" : "--";
                 localStorage.setItem('aetherCity', data.name);
                 fetchAQI(data.coord.lat, data.coord.lon);
-
-            } catch (err) { alert("Error: " + err.message); }
+            } catch (err) { alert(err.message); }
         }
-
         async function fetchAQI(lat, lon) {
-            try {
-                const url = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
-                const res = await fetch(url);
-                const data = await res.json();
-                const aqiData = data.list[0];
-
-                const score = aqiData.main.aqi;
-                const statusMap = {
-                    1: { text: "Good", color: "#00b894" },
-                    2: { text: "Fair", color: "#ffeaa7" },
-                    3: { text: "Moderate", color: "#fdcb6e" },
-                    4: { text: "Poor", color: "#e17055" },
-                    5: { text: "Very Poor", color: "#d63031" }
-                };
-                
-                const status = statusMap[score];
-                document.getElementById('aqiScore').textContent = score;
-                const statusEl = document.getElementById('aqiStatusText');
-                statusEl.textContent = status.text;
-                statusEl.style.background = status.color;
-                if(score > 2) statusEl.style.color = "#2d3436"; else statusEl.style.color = "white";
-
-                document.getElementById('pm25').textContent = aqiData.components.pm2_5 + " µg/m³";
-                document.getElementById('pm10').textContent = aqiData.components.pm10 + " µg/m³";
-                document.getElementById('co').textContent = aqiData.components.co + " µg/m³";
-                document.getElementById('no2').textContent = aqiData.components.no2 + " µg/m³";
-                document.getElementById('o3').textContent = aqiData.components.o3 + " µg/m³";
-
-            } catch (err) { console.error("AQI Error", err); }
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+            const data = await res.json(); const aqi = data.list[0];
+            const map = {1:{t:"Good",c:"#00b894"},2:{t:"Fair",c:"#ffeaa7"},3:{t:"Moderate",c:"#fdcb6e"},4:{t:"Poor",c:"#e17055"},5:{t:"Very Poor",c:"#d63031"}};
+            document.getElementById('aqiScore').textContent = aqi.main.aqi;
+            const st = document.getElementById('aqiStatusText'); st.textContent = map[aqi.main.aqi].t; st.style.background = map[aqi.main.aqi].c;
+            st.style.color = aqi.main.aqi > 2 ? "#2d3436" : "white";
+            document.getElementById('pm25').textContent = aqi.components.pm2_5 + " µg/m³";
+            document.getElementById('pm10').textContent = aqi.components.pm10 + " µg/m³";
+            document.getElementById('co').textContent = aqi.components.co + " µg/m³";
+            document.getElementById('no2').textContent = aqi.components.no2 + " µg/m³";
+            document.getElementById('o3').textContent = aqi.components.o3 + " µg/m³";
         }
-
         function getWeather() { if(cityInput.value) fetchWeather(cityInput.value); }
-        function getLocationWeather() {
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    fetchWeather(null, pos.coords.latitude, pos.coords.longitude);
-                }, () => alert("Location access denied."));
+        function getLocationWeather() { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p => fetchWeather(null, p.coords.latitude, p.coords.longitude)); }
+        fetchWeather(localStorage.getItem('aetherCity') || 'London');
+
+        // --- NEW: QR CODE ---
+        function generateQR() {
+            const txt = document.getElementById('qrInput').value;
+            const img = document.getElementById('qrImage');
+            if(txt) {
+                img.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(txt)}`;
+                img.classList.add('show');
             }
         }
-        const savedCity = localStorage.getItem('aetherCity') || 'London';
-        fetchWeather(savedCity);
 
-        // --- 4. ALARM CLOCK ---
-        let alarmInterval, alarmTime;
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-
-        function playBeep() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.type = 'square';
-            oscillator.frequency.value = 800;
-            gainNode.gain.value = 0.1;
-            oscillator.start();
-            setTimeout(() => oscillator.stop(), 200);
+        // --- NEW: TEXT ANALYTICS ---
+        function analyzeText() {
+            const t = document.getElementById('analyzeInput').value;
+            document.getElementById('charCount').textContent = t.length;
+            document.getElementById('wordCount').textContent = t.trim() ? t.trim().split(/\s+/).length : 0;
         }
 
+        // --- NEW: COLOR PICKER ---
+        function updateColor() {
+            const val = document.getElementById('colorInput').value;
+            document.getElementById('hexDisplay').textContent = val;
+            const r = parseInt(val.substr(1,2),16);
+            const g = parseInt(val.substr(3,2),16);
+            const b = parseInt(val.substr(5,2),16);
+            document.getElementById('rgbDisplay').textContent = `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // --- PASSWORD GEN ---
+        function generatePass() {
+            const len = document.getElementById('passLen').value;
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+            let pass = "";
+            for(let i=0; i<len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+            document.getElementById('passDisplay').textContent = pass;
+        }
+
+        // --- UNIT CONVERTER ---
+        function convertLen(type) {
+            const m = document.getElementById('inputM'); const ft = document.getElementById('inputFt');
+            if(type === 'm') ft.value = (m.value * 3.28084).toFixed(2);
+            else m.value = (ft.value / 3.28084).toFixed(2);
+        }
+        function convertWeight(type) {
+            const kg = document.getElementById('inputKg'); const lbs = document.getElementById('inputLbs');
+            if(type === 'kg') lbs.value = (kg.value * 2.20462).toFixed(2);
+            else kg.value = (lbs.value / 2.20462).toFixed(2);
+        }
+
+        // --- ALARM, CALENDAR, TOOLS ---
+        let alarmInterval; const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playBeep() { if(audioCtx.state === 'suspended') audioCtx.resume(); const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.type='square'; o.frequency.value=800; g.gain.value=0.1; o.start(); setTimeout(()=>o.stop(),200); }
         function setAlarm() {
-            const h = parseInt(document.getElementById('alarmH').value);
-            const m = parseInt(document.getElementById('alarmM').value);
-            const ap = document.getElementById('alarmAP').value;
-
-            if(!h || isNaN(m)) { alert("Invalid Time"); return; }
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-
-            let targetH = h;
-            if(ap === 'PM' && h !== 12) targetH += 12;
-            if(ap === 'AM' && h === 12) targetH = 0;
-
-            const now = new Date();
-            alarmTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetH, m, 0);
-            if(alarmTime <= now) alarmTime.setDate(alarmTime.getDate() + 1);
-
-            document.getElementById('alarmStatus').textContent = `Alarm set for ${h}:${String(m).padStart(2,'0')} ${ap}`;
-            
-            clearInterval(alarmInterval);
-            alarmInterval = setInterval(() => {
-                const current = new Date();
-                if(current >= alarmTime) {
-                    clearInterval(alarmInterval);
-                    document.getElementById('alarmStatus').textContent = "ALARM RINGING!";
-                    
-                    // Ring 5 times
-                    let count = 0;
-                    const ringLoop = setInterval(() => {
-                        playBeep();
-                        count++;
-                        if(count > 10) clearInterval(ringLoop);
-                    }, 500);
-                }
-            }, 1000);
+            const h = document.getElementById('alarmH').value; const m = document.getElementById('alarmM').value; const ap = document.getElementById('alarmAP').value;
+            if(!h) return; let th = parseInt(h); if(ap==='PM' && th!==12) th+=12; if(ap==='AM' && th===12) th=0;
+            const now = new Date(); let at = new Date(now.getFullYear(), now.getMonth(), now.getDate(), th, m, 0); if(at<=now) at.setDate(at.getDate()+1);
+            document.getElementById('alarmStatus').textContent = `Set for ${h}:${m} ${ap}`;
+            clearInterval(alarmInterval); alarmInterval = setInterval(() => { if(new Date() >= at) { clearInterval(alarmInterval); document.getElementById('alarmStatus').textContent = "RINGING!"; setInterval(playBeep, 500); } }, 1000);
         }
+        function clearAlarm() { clearInterval(alarmInterval); document.getElementById('alarmStatus').textContent = "No alarm set"; }
 
-        function clearAlarm() {
-            clearInterval(alarmInterval);
-            document.getElementById('alarmStatus').textContent = "No alarm set";
-        }
-
-        // --- 5. CALENDAR GENERATOR ---
         function renderCalendar() {
-            const date = new Date();
-            const month = date.getMonth();
-            const year = date.getFullYear();
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            document.getElementById('currentMonthYear').textContent = `${monthNames[month]} ${year}`;
-            
-            const calendarEl = document.getElementById('calendarDays');
-            calendarEl.innerHTML = '';
-            
-            // Empty slots
-            for(let i=0; i<firstDay; i++) {
-                const div = document.createElement('div');
-                calendarEl.appendChild(div);
-            }
-            
-            // Days
-            for(let i=1; i<=daysInMonth; i++) {
-                const div = document.createElement('div');
-                div.className = 'cal-day';
-                if(i === date.getDate()) div.classList.add('today');
-                div.textContent = i;
-                calendarEl.appendChild(div);
-            }
+            const d = new Date(); const m = d.getMonth(); const y = d.getFullYear();
+            document.getElementById('currentMonthYear').textContent = d.toLocaleString('default', {month:'long', year:'numeric'});
+            const first = new Date(y, m, 1).getDay(); const days = new Date(y, m+1, 0).getDate();
+            const cal = document.getElementById('calendarDays'); cal.innerHTML = '';
+            for(let i=0; i<first; i++) cal.appendChild(document.createElement('div'));
+            for(let i=1; i<=days; i++) { const el = document.createElement('div'); el.className='cal-day'; if(i===d.getDate()) el.classList.add('today'); el.textContent=i; cal.appendChild(el); }
         }
         renderCalendar();
 
-        // --- 6. CALCULATOR & STOPWATCH ---
-        let calcVal = "";
-        const calcDisplay = document.getElementById('calcDisplay');
-        function calcInput(v) { calcVal += v; calcDisplay.textContent = calcVal; }
-        function calcClear() { calcVal = ""; calcDisplay.textContent = "0"; }
-        function calcDel() { calcVal = calcVal.slice(0, -1); calcDisplay.textContent = calcVal || "0"; }
-        function calcResult() { try { calcVal = eval(calcVal).toString(); calcDisplay.textContent = calcVal; } catch { calcDisplay.textContent = "Error"; calcVal = ""; } }
+        // Calc & Stopwatch
+        let cv = "", cd = document.getElementById('calcDisplay');
+        function calcInput(v) { cv+=v; cd.textContent=cv; } function calcClear() { cv=""; cd.textContent="0"; } function calcDel() { cv=cv.slice(0,-1); cd.textContent=cv||"0"; } function calcResult() { try { cv=eval(cv).toString(); cd.textContent=cv; } catch { cd.textContent="Error"; cv=""; } }
+        let swInt, swT=0;
+        function startSw() { if(!swInt) { let s = Date.now()-swT; swInt = setInterval(() => { swT = Date.now()-s; document.getElementById('swDisplay').textContent = new Date(swT).toISOString().slice(11,19); }, 100); } }
+        function stopSw() { clearInterval(swInt); swInt=null; } function resetSw() { stopSw(); swT=0; document.getElementById('swDisplay').textContent="00:00:00"; }
 
-        let swInt, swTime=0;
-        function startSw() { if(!swInt) { let start = Date.now() - swTime; swInt = setInterval(() => { swTime = Date.now() - start; document.getElementById('swDisplay').textContent = new Date(swTime).toISOString().slice(11,19); }, 100); } }
-        function stopSw() { clearInterval(swInt); swInt=null; }
-        function resetSw() { stopSw(); swTime=0; document.getElementById('swDisplay').textContent="00:00:00"; }
-
-        // --- 7. POMODORO ---
-        let pomoInterval;
-        let isRunning = false;
-        let timeLeft = 25 * 60;
-        const totalTime = 25 * 60;
-        const ring = document.getElementById('pomoRing');
-        const circumference = 2 * Math.PI * 70;
-
-        function updateRing() {
-            const offset = circumference - (timeLeft / totalTime) * circumference;
-            ring.style.strokeDashoffset = offset;
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('pomoTime').textContent = `${m}:${s}`;
-        }
-
-        function togglePomo() {
-            const btn = document.getElementById('pomoBtn');
-            if(isRunning) { clearInterval(pomoInterval); btn.innerHTML = '<i class="fa-solid fa-play"></i>'; } 
-            else { pomoInterval = setInterval(() => { if(timeLeft > 0) { timeLeft--; updateRing(); } else { clearInterval(pomoInterval); alert("Zen Session Complete."); resetPomo(); } }, 1000); btn.innerHTML = '<i class="fa-solid fa-pause"></i>'; }
-            isRunning = !isRunning;
-        }
-        function resetPomo() { clearInterval(pomoInterval); isRunning = false; timeLeft = 25 * 60; updateRing(); document.getElementById('pomoBtn').innerHTML = '<i class="fa-solid fa-play"></i>'; }
-
-        // --- 8. TASKS & NOTES ---
-        const taskList = document.getElementById('taskList');
-        const taskIn = document.getElementById('taskInput');
+        // Pomo, Tasks, Notes
+        let pi, running=false, tl=1500; const ring = document.getElementById('pomoRing');
+        function togglePomo() { const b = document.getElementById('pomoBtn'); if(running) { clearInterval(pi); b.innerHTML='<i class="fa-solid fa-play"></i>'; } else { pi=setInterval(()=>{ if(tl>0) { tl--; ring.style.strokeDashoffset = 440 - (tl/1500)*440; document.getElementById('pomoTime').textContent = `${Math.floor(tl/60).toString().padStart(2,'0')}:${(tl%60).toString().padStart(2,'0')}`; } else { clearInterval(pi); alert("Done!"); resetPomo(); } }, 1000); b.innerHTML='<i class="fa-solid fa-pause"></i>'; } running=!running; }
+        function resetPomo() { clearInterval(pi); running=false; tl=1500; ring.style.strokeDashoffset=0; document.getElementById('pomoBtn').innerHTML='<i class="fa-solid fa-play"></i>'; }
+        
         let tasks = JSON.parse(localStorage.getItem('aetherTasks')) || [];
-        function renderTasks() {
-            taskList.innerHTML = '';
-            tasks.forEach((t, i) => {
-                const li = document.createElement('li');
-                li.style.padding = '10px 0';
-                li.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
-                li.style.display = 'flex';
-                li.style.justifyContent = 'space-between';
-                li.innerHTML = `<span style="${t.done ? 'text-decoration: line-through; opacity: 0.5;' : ''}">${t.text}</span><div><i class="fa-solid fa-check" onclick="toggleTask(${i})" style="cursor:pointer; margin-right:10px; color: var(--accent);"></i><i class="fa-solid fa-trash" onclick="delTask(${i})" style="cursor:pointer; color: #ff7675;"></i></div>`;
-                taskList.appendChild(li);
-            });
-            localStorage.setItem('aetherTasks', JSON.stringify(tasks));
-        }
-        function addTask() { if(taskIn.value) { tasks.push({text: taskIn.value, done: false}); taskIn.value = ''; renderTasks(); } }
-        function toggleTask(i) { tasks[i].done = !tasks[i].done; renderTasks(); }
-        function delTask(i) { tasks.splice(i, 1); renderTasks(); }
+        function renderTasks() { const l = document.getElementById('taskList'); l.innerHTML=''; tasks.forEach((t,i) => { l.innerHTML += `<li style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><span style="${t.done?'text-decoration:line-through;opacity:0.5':''}">${t.text}</span><div><i class="fa-solid fa-check" onclick="tasks[${i}].done=!tasks[${i}].done;renderTasks()" style="cursor:pointer;margin-right:10px;color:var(--accent)"></i><i class="fa-solid fa-trash" onclick="tasks.splice(${i},1);renderTasks()" style="cursor:pointer;color:#ff7675"></i></div></li>`; }); localStorage.setItem('aetherTasks', JSON.stringify(tasks)); }
+        function addTask() { const v = document.getElementById('taskInput').value; if(v) { tasks.push({text:v, done:false}); document.getElementById('taskInput').value=''; renderTasks(); } }
         renderTasks();
 
-        const noteArea = document.getElementById('stickyNote');
-        if(localStorage.getItem('aetherNote')) noteArea.value = localStorage.getItem('aetherNote');
-        noteArea.addEventListener('input', () => localStorage.setItem('aetherNote', noteArea.value));
+        const na = document.getElementById('stickyNote'); if(localStorage.getItem('aetherNote')) na.value = localStorage.getItem('aetherNote'); na.addEventListener('input', () => localStorage.setItem('aetherNote', na.value));
     </script>
 </body>
 </html>
