@@ -1,0 +1,6 @@
+# Aether Tools Robots.txt
+User-agent: *
+Allow: /
+
+# Direct search engines to your sitemap
+Sitemap: https://rajpratham1.github.io/Aether-Tools/sitemap.xml
