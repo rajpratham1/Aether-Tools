@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Security Scanner - Enterprise Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #0f1419;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #2d3748;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid #ff6b6b;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .tabs {
+            display: flex;
+            background: #1a1f2e;
+            border-bottom: 2px solid #2d3748;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: #a0aec0;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #2d3748;
+            color: #fff;
+        }
+
+        .tab.active {
+            color: #4299e1;
+            border-bottom-color: #4299e1;
+            background: #2d3748;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: #1a1f2e;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .main-content {
+            padding: 30px;
+            background: #1a1f2e;
+        }
+
+        .url-input-section {
+            background: #2d3748;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #4a5568;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #4a5568;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #1a1f2e;
+            color: #e0e0e0;
+            transition: border-color 0.3s;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #4299e1;
+        }
+
+        .test-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            background: #4a5568;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #2d3748;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.primary {
+            background: #4299e1;
+        }
+
+        .action-btn.success {
+            background: #48bb78;
+        }
+
+        .action-btn.warning {
+            background: #ed8936;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: #2d3748;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #4a5568;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+
+        .feature-card h3 {
+            color: #4299e1;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: #a0aec0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .test-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .test-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #1a1f2e;
+            border-radius: 6px;
+            border: 1px solid #4a5568;
+            transition: all 0.2s;
+        }
+
+        .test-option:hover {
+            border-color: #4299e1;
+            background: #2d3748;
+        }
+
+        .test-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .test-option label {
+            cursor: pointer;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #2d3748;
+            border-top: 4px solid #4299e1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .scan-progress {
+            background: #2d3748;
+            height: 35px;
+            border-radius: 18px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 1px solid #4a5568;
+        }
+
+        .scan-progress-bar {
+            background: linear-gradient(90deg, #4299e1, #3182ce);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .network-monitor {
+            background: #0d1117;
+            color: #d4d4d4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            display: none;
+            border: 1px solid #30363d;
+        }
+
+        .network-request {
+            background: #161b22;
+            padding: 12px;
+            margin: 8px 0;
+            border-left: 4px solid #238636;
+            border-radius: 4px;
+        }
+
+        .network-request.error {
+            border-left-color: #da3633;
+        }
+
+        .network-request.warning {
+            border-left-color: #d29922;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .request-method {
+            color: #58a6ff;
+        }
+
+        .request-status {
+            color: #3fb950;
+        }
+
+        .request-status.error {
+            color: #f85149;
+        }
+
+        .request-details {
+            font-size: 11px;
+            color: #8b949e;
+            margin-top: 5px;
+        }
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .test-result {
+            background: #2d3748;
+            border-left: 4px solid #4a5568;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            display: none;
+        }
+
+        .test-result.success {
+            border-left-color: #48bb78;
+            background: linear-gradient(90deg, rgba(72, 187, 120, 0.1), transparent);
+        }
+
+        .test-result.warning {
+            border-left-color: #ed8936;
+            background: linear-gradient(90deg, rgba(237, 137, 54, 0.1), transparent);
+        }
+
+        .test-result.danger {
+            border-left-color: #f56565;
+            background: linear-gradient(90deg, rgba(245, 101, 101, 0.1), transparent);
+        }
+
+        .test-result h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e0e0e0;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-icon.success { background: #48bb78; }
+        .status-icon.warning { background: #ed8936; }
+        .status-icon.danger { background: #f56565; }
+
+        .cvss-score {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .cvss-critical {
+            background: #c53030;
+            color: white;
+        }
+
+        .cvss-high {
+            background: #dd6b20;
+            color: white;
+        }
+
+        .cvss-medium {
+            background: #d69e2e;
+            color: white;
+        }
+
+        .cvss-low {
+            background: #38a169;
+            color: white;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            display: none;
+            border: 1px solid #4a5568;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .summary-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+            color: #4299e1;
+        }
+
+        .vulnerability-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+            border: 1px solid #4a5568;
+        }
+
+        .fix-suggestion {
+            background: rgba(66, 153, 225, 0.1);
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .code-block {
+            background: #0d1117;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 10px 0;
+            border: 1px solid #30363d;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            background: #4caf50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .endpoint-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #1a1f2e;
+            border-left: 3px solid #4299e1;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1f2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2d3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ Professional Security Scanner</h1>
+            <p>Enterprise-Grade Vulnerability Assessment • CVSS Scoring • Export Reports</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="scanner" onclick="switchTab('scanner', event)">Scanner</button>
+            <button class="tab" data-tab="advanced" onclick="switchTab('advanced', event)">Advanced</button>
+            <button class="tab" data-tab="payloads" onclick="switchTab('payloads', event)">Payloads</button>
+            <button class="tab" data-tab="reports" onclick="switchTab('reports', event)">Reports</button>
+            <button class="tab" data-tab="history" onclick="switchTab('history', event)">History</button>
+            <button class="tab" data-tab="compare" onclick="switchTab('compare', event)">Compare</button>
+            <button class="tab" data-tab="tools" onclick="switchTab('tools', event)">Tools</button>
+        </div>
+
+        <!-- SCANNER TAB -->
+        <div id="scanner" class="tab-content active">
+            <div class="main-content">
+                <div class="url-input-section">
+                    <div class="input-group">
+                        <input type="url" class="url-input" id="websiteUrl" placeholder="Enter website URL (e.g., https://anyonewebsite.in)" required>
+                        <button class="test-btn" id="startTest">🚀 Start Deep Scan</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn primary" onclick="quickScan()">⚡ Quick Scan</button>
+                        <button class="action-btn success" onclick="exportReport('pdf')">📄 Export PDF</button>
+                        <button class="action-btn success" onclick="exportReport('json')">📋 Export JSON</button>
+                        <button class="action-btn warning" onclick="saveToHistory()">💾 Save</button>
+                        <button class="action-btn" onclick="clearResults()">🗑️ Clear</button>
+                    </div>
+
+                    <div class="feature-grid" style="margin-top: 20px;">
+                        <div class="feature-card">
+                            <h3>🔬 Deep Scan</h3>
+                            <p>Analyzes JavaScript files, discovers hidden endpoints, tests all APIs</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>📊 CVSS Scoring</h3>
+                            <p>Industry-standard vulnerability severity ratings</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>📡 Network Monitor</h3>
+                            <p>Real-time HTTP request/response tracking</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>💣 1000+ Payloads</h3>
+                            <p>Comprehensive attack vectors for testing</p>
+                        </div>
+                    </div>
+
+                    <div class="test-options">
+                        <div class="test-option">
+                            <input type="checkbox" id="deepScan" checked>
+                            <label for="deepScan"><strong>🔍 Deep Scan Mode</strong></label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testHeaders" checked>
+                            <label for="testHeaders">Security Headers</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testSSL" checked>
+                            <label for="testSSL">SSL/TLS Analysis</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testAPI" checked>
+                            <label for="testAPI">API Discovery</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testCORS" checked>
+                            <label for="testCORS">CORS Configuration</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testTech" checked>
+                            <label for="testTech">Technology Detection</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testFirebase" checked>
+                            <label for="testFirebase">Firebase Security</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testMongoDB" checked>
+                            <label for="testMongoDB">MongoDB/NoSQL</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testXSS" checked>
+                            <label for="testXSS">XSS Vulnerabilities</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testSQLi" checked>
+                            <label for="testSQLi">SQL Injection</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testDirectories" checked>
+                            <label for="testDirectories">Directory Traversal</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testAuth" checked>
+                            <label for="testAuth">Auth Bypass</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testDataMod" checked>
+                            <label for="testDataMod">Data Modification</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testCookies" checked>
+                            <label for="testCookies">Cookie Analysis</label>
+                        </div>
+                        <div class="test-option">
+                            <input type="checkbox" id="testSubdomains" checked>
+                            <label for="testSubdomains">Subdomain Scanner</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loading" id="loadingSection">
+                    <div class="spinner"></div>
+                    <p style="color: #e0e0e0;">Running comprehensive security scan...</p>
+                    <p id="currentTest" style="color: #a0aec0; margin-top: 10px;">Initializing...</p>
+                    <div class="scan-progress">
+                        <div class="scan-progress-bar" id="scanProgress">0%</div>
+                    </div>
+                    <p id="scanStatus" style="color: #a0aec0; margin-top: 10px; font-size: 14px;">Ready to scan...</p>
+                </div>
+
+                <div class="network-monitor" id="networkMonitor">
+                    <h3 style="color: #4fc3f7; margin-bottom: 15px;">📡 Network Activity Monitor</h3>
+                    <div id="networkRequests"></div>
+                </div>
+
+                <div id="discoveredEndpoints" style="display: none; background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #4a5568;">
+                    <h3 style="color: #4299e1; margin-bottom: 15px;">🎯 Discovered Endpoints</h3>
+                    <div id="endpointsList"></div>
+                </div>
+
+                <div id="scanNotesSection" style="display: none; background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #4a5568;">
+                    <h3 style="color: #ed8936; margin-bottom: 15px;">Scan Notes</h3>
+                    <div id="scanNotes"></div>
+                </div>
+
+                <div class="technology-detection" id="techDetection" style="display: none; background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #4a5568;">
+                    <h3 style="color: #48bb78;">🔍 Technology Stack Detected</h3>
+                    <div class="tech-stack" id="techStack"></div>
+                </div>
+
+                <div class="results-section" id="resultsSection"></div>
+
+                <div class="summary-section" id="summarySection">
+                    <h2>📊 Security Assessment Summary</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-number" id="totalTests">0</span>
+                            <span>Total Tests</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-number" id="passedTests">0</span>
+                            <span>Passed</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-number" id="warningTests">0</span>
+                            <span>Warnings</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-number" id="failedTests">0</span>
+                            <span>Critical Issues</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-number" id="securityScore">0%</span>
+                            <span>Security Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTS TAB -->
+        <div id="reports" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">📊 Export Reports</h2>
+                
+                <div style="background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #4a5568;">
+                    <h3 style="color: #e0e0e0; margin-bottom: 15px;">Available Export Formats</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn success" onclick="exportReport('pdf')">📄 PDF Report</button>
+                        <button class="action-btn success" onclick="exportReport('json')">📋 JSON Data</button>
+                        <button class="action-btn success" onclick="exportReport('html')">🌐 HTML Report</button>
+                        <button class="action-btn success" onclick="exportReport('csv')">📊 CSV Export</button>
+                        <button class="action-btn success" onclick="exportReport('xml')">📝 XML Export</button>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <strong style="color: #4299e1;">Report Includes:</strong><br><br>
+                    ✓ Executive Summary<br>
+                    ✓ Vulnerability Details with CVSS Scores<br>
+                    ✓ Network Activity Logs<br>
+                    ✓ Discovered Endpoints<br>
+                    ✓ Technology Stack Analysis<br>
+                    ✓ Remediation Recommendations<br>
+                    ✓ OWASP Top 10 Compliance Checklist
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY TAB -->
+        <div id="history" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">📜 Scan History</h2>
+                <div id="historyList">
+                    <p style="color: #a0aec0;">No scan history yet. Complete a scan to see results here.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVANCED TAB -->
+        <div id="advanced" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">⚙️ Advanced Configuration</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>🎯 Custom Endpoints</h3>
+                        <textarea id="customEndpoints" placeholder="Enter custom endpoints (one per line)&#10;/api/custom&#10;/admin/panel" style="width: 100%; height: 100px; background: #1a1f2e; color: #e0e0e0; border: 1px solid #4a5568; border-radius: 4px; padding: 10px; margin-top: 10px; font-family: 'Courier New', monospace;"></textarea>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🔑 Authentication</h3>
+                        <input type="text" id="authToken" placeholder="Bearer token or API key" style="width: 100%; background: #1a1f2e; color: #e0e0e0; border: 1px solid #4a5568; border-radius: 4px; padding: 10px; margin-top: 10px;">
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>⏱️ Scan Speed</h3>
+                        <select id="scanSpeed" style="width: 100%; background: #1a1f2e; color: #e0e0e0; border: 1px solid #4a5568; border-radius: 4px; padding: 10px; margin-top: 10px;">
+                            <option value="fast">Fast (100ms delay)</option>
+                            <option value="normal" selected>Normal (500ms delay)</option>
+                            <option value="slow">Slow (1000ms delay)</option>
+                            <option value="stealth">Stealth (2000ms delay)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>🌐 Proxy Settings</h3>
+                        <input type="text" id="proxyUrl" placeholder="Proxy URL (optional)" style="width: 100%; background: #1a1f2e; color: #e0e0e0; border: 1px solid #4a5568; border-radius: 4px; padding: 10px; margin-top: 10px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYLOADS TAB -->
+        <div id="payloads" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">💣 Attack Payloads Library</h2>
+                <p style="color: #a0aec0; margin-bottom: 20px;">1000+ pre-configured attack vectors for comprehensive testing</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568; text-align: center;">
+                        <div style="font-size: 2em; font-weight: bold; color: #4299e1;">250+</div>
+                        <div style="color: #a0aec0; margin-top: 5px; font-size: 14px;">XSS Payloads</div>
+                    </div>
+                    <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568; text-align: center;">
+                        <div style="font-size: 2em; font-weight: bold; color: #4299e1;">200+</div>
+                        <div style="color: #a0aec0; margin-top: 5px; font-size: 14px;">SQL Injection</div>
+                    </div>
+                    <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568; text-align: center;">
+                        <div style="font-size: 2em; font-weight: bold; color: #4299e1;">150+</div>
+                        <div style="color: #a0aec0; margin-top: 5px; font-size: 14px;">NoSQL Injection</div>
+                    </div>
+                    <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568; text-align: center;">
+                        <div style="font-size: 2em; font-weight: bold; color: #4299e1;">100+</div>
+                        <div style="color: #a0aec0; margin-top: 5px; font-size: 14px;">Path Traversal</div>
+                    </div>
+                    <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568; text-align: center;">
+                        <div style="font-size: 2em; font-weight: bold; color: #4299e1;">300+</div>
+                        <div style="color: #a0aec0; margin-top: 5px; font-size: 14px;">Other Vectors</div>
+                    </div>
+                </div>
+                
+                <div class="code-block" style="margin-top: 20px;" id="payloadSamples"></div>
+            </div>
+        </div>
+
+        <!-- COMPARE TAB -->
+        <div id="compare" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">⚖️ Compare Websites</h2>
+                <p style="color: #a0aec0; margin-bottom: 20px;">Compare security posture of multiple websites side-by-side</p>
+                
+                <div class="input-group">
+                    <input type="url" class="url-input" id="compareUrl1" placeholder="Website 1 URL">
+                    <input type="url" class="url-input" id="compareUrl2" placeholder="Website 2 URL">
+                    <button class="test-btn" onclick="compareWebsites()">⚖️ Compare</button>
+                </div>
+                
+                <div id="comparisonResults" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+
+        <!-- TOOLS TAB -->
+        <div id="tools" class="tab-content">
+            <div class="main-content">
+                <h2 style="color: #4299e1; margin-bottom: 20px;">🔧 Security Tools</h2>
+                
+                <div class="feature-grid" id="toolsGrid"></div>
+                <div class="code-block" style="margin-top: 20px;" id="toolOutput">Enter a target URL in the scanner tab, then run any tool from here.</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="security-tester.js"></script>
+    <script>
+        function switchTab(tabName, event) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            } else {
+                const targetTab = document.querySelector(`.tab[data-tab="${tabName}"]`);
+                if (targetTab) targetTab.classList.add('active');
+            }
+        }
+
+        function quickScan() {
+            const testsToDisable = ['testSubdomains', 'testDirectories', 'testDataMod'];
+            const previousValues = {};
+            testsToDisable.forEach(testId => {
+                const element = document.getElementById(testId);
+                if (element) {
+                    previousValues[testId] = element.checked;
+                    element.checked = false;
+                }
+            });
+
+            if (window.securityTester) {
+                window.securityTester.startSecurityTest().finally(() => {
+                    Object.entries(previousValues).forEach(([testId, value]) => {
+                        const element = document.getElementById(testId);
+                        if (element) element.checked = value;
+                    });
+                });
+            }
+        }
+
+        function clearResults() {
+            if (confirm('Clear all scan results and network logs?')) {
+                if (window.securityTester) {
+                    window.securityTester.resetResultsView();
+                }
+                alert('All results cleared successfully.');
+            }
+        }
+
+        function getLatestReport() {
+            return window.securityTester ? window.securityTester.buildExportableReport() : null;
+        }
+
+        function escapeMarkup(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function exportReport(format) {
+            const report = getLatestReport();
+            if (!report || !report.url || report.results.length === 0) {
+                alert('Run a scan first before exporting a report.');
+                return;
+            }
+
+            const url = report.url;
+            const summary = report.summary;
+            const resultText = report.results.map(item => `${item.title}: ${item.description}${item.details ? `\n${item.details}` : ''}`).join('\n\n');
+            const networkText = report.networkRequests.map(item => `${item.timestamp} ${item.method} ${item.url} -> ${item.status} ${item.details}`).join('\n');
+
+            if (format === 'json') {
+                const blob = new Blob([JSON.stringify({ report }, null, 2)], { type: 'application/json' });
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `security-report-${Date.now()}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                alert('JSON report downloaded successfully.');
+            } else if (format === 'html') {
+                const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Scan Report - ${url}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #1a1f2e; color: #e0e0e0; padding: 20px; }
+        .header { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 30px; border-radius: 10px; margin-bottom: 20px; }
+        .summary { background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .results { background: #2d3748; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .stat { display: inline-block; margin: 10px 20px; }
+        .stat-number { font-size: 2em; font-weight: bold; color: #4299e1; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Security Scan Report</h1>
+        <p>URL: ${url}</p>
+        <p>Generated: ${new Date().toLocaleString()}</p>
+    </div>
+    <div class="summary">
+        <h2>Summary</h2>
+        <div class="stat">
+            <div class="stat-number">${summary.totalTests}</div>
+            <div>Total Tests</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">${summary.passed}</div>
+            <div>Passed</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">${summary.warnings}</div>
+            <div>Warnings</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">${summary.failed}</div>
+            <div>Failed</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">${summary.score}</div>
+            <div>Security Score</div>
+        </div>
+    </div>
+    <div class="results">
+        <h2>Detailed Results</h2>
+        <pre>${resultText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+    </div>
+    <div class="results">
+        <h2>Network Logs</h2>
+        <pre>${networkText.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+    </div>
+</body>
+</html>`;
+
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `security-report-${Date.now()}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                alert('HTML report downloaded successfully.');
+            } else if (format === 'pdf') {
+                alert('A print-friendly HTML report will be generated. Use your browser print dialog to save it as PDF.');
+                exportReport('html');
+            } else if (format === 'csv') {
+                let csvContent = 'Title,Status,Description,CVSS Score,Details\n';
+                report.results.forEach(item => {
+                    const cvss = item.cvss ? item.cvss.score : '';
+                    const line = [item.title, item.type, item.description, cvss, item.details || '']
+                        .map(value => `"${String(value).replace(/"/g, '""')}"`)
+                        .join(',');
+                    csvContent += `${line}\n`;
+                });
+
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `security-report-${Date.now()}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                alert('CSV report downloaded successfully.');
+            } else if (format === 'xml') {
+                const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<SecurityReport>
+    <Metadata>
+        <URL>${url}</URL>
+        <Timestamp>${report.timestamp}</Timestamp>
+        <Generator>Professional Security Scanner</Generator>
+    </Metadata>
+    <Summary>
+        <TotalTests>${summary.totalTests}</TotalTests>
+        <Passed>${summary.passed}</Passed>
+        <Warnings>${summary.warnings}</Warnings>
+        <Failed>${summary.failed}</Failed>
+        <SecurityScore>${summary.score}</SecurityScore>
+    </Summary>
+    <Results>
+        ${report.results.map(item => `<Result><Title>${escapeMarkup(item.title)}</Title><Status>${escapeMarkup(item.type)}</Status><Description>${escapeMarkup(item.description)}</Description></Result>`).join('')}
+    </Results>
+</SecurityReport>`;
+
+                const blob = new Blob([xmlContent], { type: 'application/xml' });
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `security-report-${Date.now()}.xml`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+
+                alert('XML report downloaded successfully.');
+            }
+        }
+
+        function saveToHistory() {
+            const report = getLatestReport();
+            if (!report || !report.url || report.results.length === 0) {
+                alert('Run a scan first before saving to history.');
+                return;
+            }
+
+            const summary = report.summary;
+            let history = [];
+            try {
+                const stored = localStorage.getItem('securityScanHistory');
+                if (stored) {
+                    history = JSON.parse(stored);
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+
+            history.unshift({
+                ...summary,
+                url: report.url,
+                timestamp: report.timestamp,
+                results: report.results
+            });
+
+            if (history.length > 50) {
+                history = history.slice(0, 50);
+            }
+
+            try {
+                localStorage.setItem('securityScanHistory', JSON.stringify(history));
+                alert('Scan results saved to history successfully.');
+                loadHistory();
+            } catch (error) {
+                alert('Error saving to history: ' + error.message);
+            }
+        }
+
+        function loadHistory() {
+            const historyList = document.getElementById('historyList');
+            if (!historyList) return;
+            
+            try {
+                const stored = localStorage.getItem('securityScanHistory');
+                if (!stored) {
+                    historyList.innerHTML = '<p style="color: #a0aec0;">No scan history yet. Complete a scan to see results here.</p>';
+                    return;
+                }
+                
+                const history = JSON.parse(stored);
+                if (history.length === 0) {
+                    historyList.innerHTML = '<p style="color: #a0aec0;">No scan history yet. Complete a scan to see results here.</p>';
+                    return;
+                }
+                
+                historyList.innerHTML = '';
+                
+                history.forEach((scan, index) => {
+                    const historyItem = document.createElement('div');
+                    historyItem.style.cssText = 'background: #2d3748; padding: 15px; margin: 10px 0; border-radius: 6px; border: 1px solid #4a5568; cursor: pointer; transition: all 0.2s;';
+                    historyItem.onmouseover = function() { this.style.borderColor = '#4299e1'; this.style.transform = 'translateX(5px)'; };
+                    historyItem.onmouseout = function() { this.style.borderColor = '#4a5568'; this.style.transform = 'translateX(0)'; };
+                    
+                    const date = new Date(scan.timestamp);
+                    const scoreColor = parseInt(scan.score) >= 80 ? '#48bb78' : parseInt(scan.score) >= 60 ? '#ed8936' : '#f56565';
+                    
+                    historyItem.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong style="color: #4299e1; font-size: 16px;">${scan.url}</strong><br>
+                                <small style="color: #a0aec0;">${date.toLocaleString()}</small>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 24px; font-weight: bold; color: ${scoreColor};">${scan.score}</div>
+                                <small style="color: #a0aec0;">Security Score</small>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; display: flex; gap: 15px;">
+                            <span style="color: #48bb78;">Passed ${scan.passed}</span>
+                            <span style="color: #ed8936;">⚠ ${scan.warnings} Warnings</span>
+                            <span style="color: #f56565;">Critical ${scan.failed}</span>
+                        </div>
+                    `;
+                    
+                    historyItem.onclick = function() {
+                        document.getElementById('websiteUrl').value = scan.url;
+                        switchTab('scanner');
+                    };
+                    
+                    historyList.appendChild(historyItem);
+                });
+                
+            } catch (e) {
+                console.error('Error loading history:', e);
+                historyList.innerHTML = '<p style="color: #f56565;">Error loading history</p>';
+            }
+        }
+
+        async function compareWebsites() {
+            const url1 = document.getElementById('compareUrl1').value;
+            const url2 = document.getElementById('compareUrl2').value;
+            
+            if (!url1 || !url2) {
+                alert('Please enter both URLs to compare.');
+                return;
+            }
+
+            if (!window.securityTester) {
+                return;
+            }
+
+            const comparisonResults = document.getElementById('comparisonResults');
+            comparisonResults.innerHTML = '<div class="code-block">Running lightweight comparison scan for both targets...</div>';
+
+            const runComparison = async (targetUrl) => {
+                document.getElementById('websiteUrl').value = targetUrl;
+                const tests = ['headers', 'ssl', 'cors', 'tech'];
+                const report = await window.securityTester.startSecurityTest({ url: targetUrl, tests });
+                return {
+                    url: targetUrl,
+                    summary: report ? report.summary : { score: '0%', totalTests: 0, passed: 0, warnings: 0, failed: 0 }
+                };
+            };
+
+            const originalUrl = document.getElementById('websiteUrl').value;
+
+            try {
+                const first = await runComparison(url1);
+                const second = await runComparison(url2);
+                const items = [first, second];
+                comparisonResults.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                        ${items.map(item => `
+                            <div style="background: #2d3748; padding: 20px; border-radius: 8px; border: 1px solid #4a5568;">
+                                <h3 style="color: #4299e1; margin-bottom: 10px;">${item.url}</h3>
+                                <p style="color: #e0e0e0;">Score: ${item.summary.score}</p>
+                                <p style="color: #a0aec0;">Tests: ${item.summary.totalTests}</p>
+                                <p style="color: #48bb78;">Passed: ${item.summary.passed}</p>
+                                <p style="color: #ed8936;">Warnings: ${item.summary.warnings}</p>
+                                <p style="color: #f56565;">Critical: ${item.summary.failed}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                comparisonResults.innerHTML = `<div class="code-block">Comparison failed: ${error.message}</div>`;
+            } finally {
+                document.getElementById('websiteUrl').value = originalUrl;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadHistory();
+        });
+    </script>
+</body>
+</html>
