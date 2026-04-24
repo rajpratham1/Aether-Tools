@@ -4,24 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="BPWWGGiWZHNG9jGeOXhuPpsH_pX2rzQvgN42VIotAB4" />
-    <title>Aether Tools | Ultra Hub</title>
+    <title>Aether Tools - Productivity, Utility and Security Scanner Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Aether Tools is a glassmorphism productivity dashboard with weather, AQI, Pomodoro, QR generation, converters, notes, and an embedded website security scanner tool.">
+    <meta name="keywords" content="Aether Tools, productivity dashboard, website security scanner, QR generator, weather dashboard, pomodoro timer, developer tools, utility hub">
+    <meta name="author" content="Pratham Kumar">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#6c5ce7">
+    <meta name="application-name" content="Aether Tools">
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rajpratham1.github.io/Aether-Tools/">
+    <meta property="og:title" content="Aether Tools - Productivity, Utility and Security Scanner Hub">
+    <meta property="og:description" content="Run daily productivity tools, developer utilities, and an embedded browser-based security scanner from one smooth dashboard.">
+    <meta property="og:site_name" content="Aether Tools">
+    <meta property="og:image" content="https://rajpratham1.github.io/Aether-Tools/preview.png">
 
-<meta name="description" content="A futuristic, all-in-one glassmorphism dashboard. Featuring Weather, AQI Monitor, Pomodoro Timer, QR Generator, and Developer Utilities.">
-<meta name="keywords" content="productivity dashboard, glassmorphism tools, QR generator, weather app, pomodoro timer, web utilities">
-<meta name="author" content="Pratham Kumar">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aether Tools - Productivity, Utility and Security Scanner Hub">
+    <meta name="twitter:description" content="Weather, notes, calculators, generators, and a built-in website security scanner inside one modern dashboard.">
+    <meta name="twitter:image" content="https://rajpratham1.github.io/Aether-Tools/preview.png">
 
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rajpratham1.github.io/Aether-Tools/">
-<meta property="og:title" content="Aether Tools | Ultra Hub">
-<meta property="og:description" content="Elevate your workflow with a stunning Aurora-background productivity suite.">
-<meta property="og:image" content="https://rajpratham1.github.io/Aether-Tools/preview.png">
-
-<link rel="canonical" href="https://rajpratham1.github.io/Aether-Tools/" />
-
-    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rajpratham1.github.io/Aether-Tools/" />
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Aether Tools",
+            "url": "https://rajpratham1.github.io/Aether-Tools/",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "description": "Aether Tools is a browser-based dashboard for productivity, utility workflows, and embedded website security scanning.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "Weather dashboard",
+                "Air quality monitor",
+                "Pomodoro focus timer",
+                "QR code generator",
+                "Password generator",
+                "Unit converter",
+                "Sticky notes",
+                "Embedded website security scanner"
+            ]
+        }
+    </script>
 
     <style>
         :root {
@@ -201,9 +232,31 @@
             animation: slideUp 0.5s ease;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        .page-section.active .card {
+            animation: cardReveal 0.65s ease both;
+        }
+        .page-section.active .card:nth-child(2) { animation-delay: 0.04s; }
+        .page-section.active .card:nth-child(3) { animation-delay: 0.08s; }
+        .page-section.active .card:nth-child(4) { animation-delay: 0.12s; }
+        .page-section.active .card:nth-child(5) { animation-delay: 0.16s; }
+        .page-section.active .card:nth-child(6) { animation-delay: 0.20s; }
+        .page-section.active .card:nth-child(7) { animation-delay: 0.24s; }
+        .page-section.active .card:nth-child(8) { animation-delay: 0.28s; }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.18) 50%, transparent 80%);
+            transform: translateX(-120%);
+            transition: transform 0.8s ease;
+            pointer-events: none;
+        }
+        .card:hover::before {
+            transform: translateX(120%);
         }
 
         .card h2 {
@@ -277,6 +330,110 @@
         .stat-val { font-size: 1.2rem; font-weight: bold; display: block; }
         .stat-label { font-size: 0.8rem; opacity: 0.7; }
 
+        .tool-hero {
+            grid-column: 1 / -1;
+            background:
+                radial-gradient(circle at top left, rgba(108, 92, 231, 0.35), transparent 45%),
+                radial-gradient(circle at bottom right, rgba(0, 206, 201, 0.25), transparent 40%),
+                var(--card-bg);
+        }
+        .tool-hero-copy { max-width: 760px; }
+        .tool-hero-copy p { color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; }
+        .tool-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+        .tool-embed-shell {
+            grid-column: 1 / -1;
+            min-height: 780px;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-embed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+        .tool-embed-header p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 740px;
+        }
+        .tool-status {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .micro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .chip-stat {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+        }
+        .chip-stat strong {
+            display: block;
+            font-size: 1rem;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+        .tool-frame-wrap {
+            flex: 1;
+            min-height: 640px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(10, 14, 22, 0.35);
+            position: relative;
+        }
+        .tool-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .tool-frame {
+            width: 100%;
+            min-height: 640px;
+            height: 72vh;
+            border: 0;
+            background: #0f1419;
+            display: none;
+        }
+        .tool-frame.show { display: block; }
+        .seo-note {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .json-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        .tool-output {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            color: var(--text-muted);
+            min-height: 48px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
         /* --- FOCUS / NOTES --- */
         .pomo-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; }
         .timer-circle { position: relative; width: 150px; height: 150px; }
@@ -316,6 +473,14 @@
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes cardReveal {
+            from { opacity: 0; transform: translateY(18px) scale(0.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+        }
 
         /* Mobile */
         @media (max-width: 768px) {
@@ -339,13 +504,13 @@
             <i class="fa-solid fa-atom"></i> Aether
         </div>
         <ul class="nav-links">
-            <li class="nav-item active" onclick="showPage('dashboard')">
+            <li class="nav-item active" data-page="dashboard" onclick="showPage('dashboard', event)">
                 <i class="fa-solid fa-layer-group"></i> <span>Dashboard</span>
             </li>
-            <li class="nav-item" onclick="showPage('tools')">
+            <li class="nav-item" data-page="tools" onclick="showPage('tools', event)">
                 <i class="fa-solid fa-screwdriver-wrench"></i> <span>Tools</span>
             </li>
-            <li class="nav-item" onclick="showPage('notes')">
+            <li class="nav-item" data-page="notes" onclick="showPage('notes', event)">
                 <i class="fa-regular fa-note-sticky"></i> <span>Notes</span>
             </li>
         </ul>
@@ -436,6 +601,23 @@
 
         <div id="tools" class="page-section">
             <div class="bento-grid">
+                <div class="card tool-hero">
+                    <h2>Featured Tooling <i class="fa-solid fa-shield-halved"></i></h2>
+                    <div class="tool-hero-copy">
+                        <p>Aether Tools now includes your browser-based website security scanner as a native utility. You can launch the standalone scanner or load it directly inside this workspace and keep the rest of the dashboard around it.</p>
+                        <p class="seo-note">For best scan accuracy on external domains, use the scanner's proxy setting and authentication field when needed. The embedded version now loads a local `security-scanner.html` page inside Aether Tools, backed by its own `security-tester.js` copy for smoother hosting.</p>
+                        <div class="micro-grid">
+                            <div class="chip-stat"><strong>14+</strong><span>Core tools</span></div>
+                            <div class="chip-stat"><strong>Embedded</strong><span>Scanner mode</span></div>
+                            <div class="chip-stat"><strong>Local</strong><span>Fast loading</span></div>
+                            <div class="chip-stat"><strong>SEO</strong><span>Search-ready</span></div>
+                        </div>
+                        <div class="tool-actions">
+                            <button class="primary-btn" type="button" onclick="loadSecurityScanner()"><i class="fa-solid fa-bolt"></i> Load Scanner Here</button>
+                            <button class="secondary-btn" type="button" onclick="openSecurityScanner()"><i class="fa-solid fa-up-right-from-square"></i> Open Full Scanner</button>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="card">
                     <h2>Password Gen <i class="fa-solid fa-key"></i></h2>
@@ -556,6 +738,37 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card">
+                    <h2>JSON Toolkit <i class="fa-solid fa-code"></i></h2>
+                    <textarea id="jsonInput" placeholder='Paste JSON here to validate, prettify, or minify...' style="height: 130px; resize: vertical;"></textarea>
+                    <div class="json-actions">
+                        <button class="primary-btn" type="button" onclick="formatJson('pretty')">Prettify</button>
+                        <button class="secondary-btn" type="button" onclick="formatJson('minify')">Minify</button>
+                        <button class="secondary-btn" type="button" onclick="copyJsonOutput()">Copy</button>
+                    </div>
+                    <div class="tool-output" id="jsonStatus">JSON output will appear here.</div>
+                </div>
+
+                <div class="card tool-embed-shell">
+                    <div class="tool-embed-header">
+                        <div>
+                            <h2>Embedded Security Scanner <i class="fa-solid fa-radar"></i></h2>
+                            <p>Run the full scanner in-place for endpoint discovery, header checks, lightweight vulnerability heuristics, exports, and history, without leaving Aether Tools.</p>
+                        </div>
+                        <div class="tool-actions">
+                            <button class="primary-btn" type="button" onclick="loadSecurityScanner()"><i class="fa-solid fa-play"></i> Load</button>
+                            <button class="secondary-btn" type="button" onclick="reloadSecurityScanner()"><i class="fa-solid fa-rotate"></i> Reload</button>
+                        </div>
+                    </div>
+                    <div class="tool-status" id="scannerStatus">Scanner not loaded yet. Use "Load" to embed the existing workspace scanner.</div>
+                    <div class="tool-frame-wrap">
+                        <div class="tool-placeholder" id="scannerPlaceholder">
+                            The embedded scanner is lazy-loaded so the dashboard stays fast. Once loaded, it uses the local `security-scanner.html` and `security-tester.js` bundle inside Aether Tools.
+                        </div>
+                        <iframe id="securityScannerFrame" class="tool-frame" title="Embedded Website Security Scanner" loading="lazy" referrerpolicy="no-referrer"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -578,9 +791,58 @@
         // --- CORE & THEME ---
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
+        const scannerFrame = document.getElementById('securityScannerFrame');
+        const scannerPlaceholder = document.getElementById('scannerPlaceholder');
+        const scannerStatus = document.getElementById('scannerStatus');
+        const scannerSrc = 'security-scanner.html';
         if(localStorage.getItem('theme') === 'dark') { body.classList.add('dark-mode'); themeToggle.classList.remove('light-mode'); }
         themeToggle.addEventListener('click', () => { body.classList.toggle('dark-mode'); body.classList.toggle('light-mode'); localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light'); });
-        function showPage(pid) { document.querySelectorAll('.page-section').forEach(e => e.classList.remove('active')); document.getElementById(pid).classList.add('active'); document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active')); event.currentTarget.classList.add('active'); }
+        function showPage(pid, event) {
+            document.querySelectorAll('.page-section').forEach(e => e.classList.remove('active'));
+            document.getElementById(pid).classList.add('active');
+            document.querySelectorAll('.nav-item[data-page]').forEach(e => e.classList.remove('active'));
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            } else {
+                const activeNav = document.querySelector(`.nav-item[data-page="${pid}"]`);
+                if (activeNav) activeNav.classList.add('active');
+            }
+            document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function updateScannerStatus(message) {
+            scannerStatus.textContent = message;
+        }
+        function loadSecurityScanner(forceReload = false) {
+            if (!scannerFrame) return;
+            if (forceReload || !scannerFrame.src) {
+                updateScannerStatus('Loading embedded scanner from the workspace...');
+                scannerFrame.src = scannerSrc;
+            }
+            scannerFrame.classList.add('show');
+            if (scannerPlaceholder) scannerPlaceholder.style.display = 'none';
+        }
+        function reloadSecurityScanner() {
+            if (!scannerFrame) return;
+            scannerFrame.classList.remove('show');
+            if (scannerPlaceholder) scannerPlaceholder.style.display = 'flex';
+            scannerFrame.removeAttribute('src');
+            setTimeout(() => loadSecurityScanner(true), 40);
+        }
+        function openSecurityScanner() {
+            window.open(scannerSrc, '_blank', 'noopener');
+        }
+        if (scannerFrame) {
+            scannerFrame.addEventListener('load', () => {
+                updateScannerStatus('Scanner loaded successfully. You can use the full embedded tester below.');
+                scannerFrame.classList.add('show');
+                if (scannerPlaceholder) scannerPlaceholder.style.display = 'none';
+            });
+            scannerFrame.addEventListener('error', () => {
+                updateScannerStatus('The embedded scanner could not be loaded. Use "Open Full Scanner" as a fallback.');
+                scannerFrame.classList.remove('show');
+                if (scannerPlaceholder) scannerPlaceholder.style.display = 'flex';
+            });
+        }
         
         // --- USER & CLOCK ---
         const userNameEl = document.getElementById('userName');
@@ -631,6 +893,7 @@
         }
         function getWeather() { if(cityInput.value) fetchWeather(cityInput.value); }
         function getLocationWeather() { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p => fetchWeather(null, p.coords.latitude, p.coords.longitude)); }
+        cityInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') getWeather(); });
         fetchWeather(localStorage.getItem('aetherCity') || 'London');
 
         // --- NEW: QR CODE ---
@@ -642,12 +905,38 @@
                 img.classList.add('show');
             }
         }
+        document.getElementById('qrInput').addEventListener('keydown', (event) => { if (event.key === 'Enter') generateQR(); });
 
         // --- NEW: TEXT ANALYTICS ---
         function analyzeText() {
             const t = document.getElementById('analyzeInput').value;
             document.getElementById('charCount').textContent = t.length;
             document.getElementById('wordCount').textContent = t.trim() ? t.trim().split(/\s+/).length : 0;
+        }
+        function formatJson(mode) {
+            const input = document.getElementById('jsonInput').value.trim();
+            const status = document.getElementById('jsonStatus');
+            if (!input) {
+                status.textContent = 'Paste valid JSON first.';
+                return;
+            }
+            try {
+                const parsed = JSON.parse(input);
+                status.textContent = mode === 'minify' ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
+            } catch (error) {
+                status.textContent = `Invalid JSON: ${error.message}`;
+            }
+        }
+        async function copyJsonOutput() {
+            const status = document.getElementById('jsonStatus');
+            const output = status.textContent;
+            if (!output || output === 'JSON output will appear here.') return;
+            try {
+                await navigator.clipboard.writeText(output);
+                status.textContent = `${output}\n\nCopied to clipboard.`;
+            } catch (error) {
+                status.textContent = `${output}\n\nClipboard copy failed.`;
+            }
         }
 
         // --- NEW: COLOR PICKER ---
@@ -659,6 +948,7 @@
             const b = parseInt(val.substr(5,2),16);
             document.getElementById('rgbDisplay').textContent = `rgb(${r}, ${g}, ${b})`;
         }
+        updateColor();
 
         // --- PASSWORD GEN ---
         function generatePass() {
@@ -668,6 +958,19 @@
             for(let i=0; i<len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
             document.getElementById('passDisplay').textContent = pass;
         }
+        document.getElementById('passDisplay').addEventListener('click', async () => {
+            const password = document.getElementById('passDisplay').textContent;
+            if (!password || password === 'Hit Generate') return;
+            try {
+                await navigator.clipboard.writeText(password);
+                document.getElementById('passDisplay').textContent = `${password} copied`;
+                setTimeout(() => {
+                    document.getElementById('passDisplay').textContent = password;
+                }, 1200);
+            } catch (error) {
+                return;
+            }
+        });
 
         // --- UNIT CONVERTER ---
         function convertLen(type) {
@@ -713,12 +1016,20 @@
         // Pomo, Tasks, Notes
         let pi, running=false, tl=1500; const ring = document.getElementById('pomoRing');
         function togglePomo() { const b = document.getElementById('pomoBtn'); if(running) { clearInterval(pi); b.innerHTML='<i class="fa-solid fa-play"></i>'; } else { pi=setInterval(()=>{ if(tl>0) { tl--; ring.style.strokeDashoffset = 440 - (tl/1500)*440; document.getElementById('pomoTime').textContent = `${Math.floor(tl/60).toString().padStart(2,'0')}:${(tl%60).toString().padStart(2,'0')}`; } else { clearInterval(pi); alert("Done!"); resetPomo(); } }, 1000); b.innerHTML='<i class="fa-solid fa-pause"></i>'; } running=!running; }
-        function resetPomo() { clearInterval(pi); running=false; tl=1500; ring.style.strokeDashoffset=0; document.getElementById('pomoBtn').innerHTML='<i class="fa-solid fa-play"></i>'; }
+        function resetPomo() {
+            clearInterval(pi);
+            running=false;
+            tl=1500;
+            ring.style.strokeDashoffset=0;
+            document.getElementById('pomoTime').textContent = '25:00';
+            document.getElementById('pomoBtn').innerHTML='<i class="fa-solid fa-play"></i>';
+        }
         
         let tasks = JSON.parse(localStorage.getItem('aetherTasks')) || [];
         function renderTasks() { const l = document.getElementById('taskList'); l.innerHTML=''; tasks.forEach((t,i) => { l.innerHTML += `<li style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);"><span style="${t.done?'text-decoration:line-through;opacity:0.5':''}">${t.text}</span><div><i class="fa-solid fa-check" onclick="tasks[${i}].done=!tasks[${i}].done;renderTasks()" style="cursor:pointer;margin-right:10px;color:var(--accent)"></i><i class="fa-solid fa-trash" onclick="tasks.splice(${i},1);renderTasks()" style="cursor:pointer;color:#ff7675"></i></div></li>`; }); localStorage.setItem('aetherTasks', JSON.stringify(tasks)); }
-        function addTask() { const v = document.getElementById('taskInput').value; if(v) { tasks.push({text:v, done:false}); document.getElementById('taskInput').value=''; renderTasks(); } }
+        function addTask() { const v = document.getElementById('taskInput').value.trim(); if(v) { tasks.push({text:v, done:false}); document.getElementById('taskInput').value=''; renderTasks(); } }
         renderTasks();
+        document.getElementById('taskInput').addEventListener('keydown', (event) => { if (event.key === 'Enter') addTask(); });
 
         const na = document.getElementById('stickyNote'); if(localStorage.getItem('aetherNote')) na.value = localStorage.getItem('aetherNote'); na.addEventListener('input', () => localStorage.setItem('aetherNote', na.value));
     </script>

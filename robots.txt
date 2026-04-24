@@ -1,6 +1,7 @@
-# Aether Tools Robots.txt
+# Aether Tools robots.txt
 User-agent: *
 Allow: /
 
-# Direct search engines to your sitemap
+# Canonical crawl hints
+Host: https://rajpratham1.github.io
 Sitemap: https://rajpratham1.github.io/Aether-Tools/sitemap.xml
