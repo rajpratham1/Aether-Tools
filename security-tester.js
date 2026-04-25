@@ -25,13 +25,16 @@ class SecurityTester {
                 '<script>alert("XSS")</script>',
                 '"><script>alert("XSS")</script>',
                 'javascript:alert("XSS")',
-                '<img src=x onerror=alert("XSS")>'
+                '<img src=x onerror=alert("XSS")>',
+                '"><svg/onload=alert(1)>'
             ],
             sqli: [
                 "' OR '1'='1",
                 "' UNION SELECT NULL--",
                 "'; DROP TABLE users--",
-                "' OR 1=1--"
+                "' OR 1=1--",
+                "admin' --",
+                "1' OR '1'='1"
             ],
             nosql: [
                 '?title[$ne]=null',
@@ -39,13 +42,15 @@ class SecurityTester {
                 '?id[$regex]=.*',
                 '?author[$exists]=true',
                 '?_id[$ne]=null',
-                '?$where=this.title.length>0'
+                '?$where=this.title.length>0',
+                '?username[$gt]='
             ],
             traversal: [
                 '../../../etc/passwd',
                 '..\\..\\..\\windows\\system32\\drivers\\etc\\hosts',
                 '../../../../etc/shadow',
-                '../../../var/log/apache/access.log'
+                '../../../var/log/apache/access.log',
+                '%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
             ]
         };
 
@@ -85,6 +90,18 @@ class SecurityTester {
                 title: 'Port Surface',
                 description: 'Performs browser-safe HTTPS probes for a few well-known ports.',
                 runner: () => this.runPortSurfaceTool()
+            },
+            {
+                id: 'bomber',
+                title: 'Request Bomber',
+                description: 'Stress tests an endpoint by rapidly sending configurable concurrent requests.',
+                runner: () => this.runRequestBomberTool()
+            },
+            {
+                id: 'clickjacking',
+                title: 'Clickjacking Tester',
+                description: 'Interactive visual tool to check if a website is vulnerable to framing attacks.',
+                runner: () => this.runClickjackingTool()
             }
         ];
 
@@ -175,11 +192,34 @@ class SecurityTester {
         ];
 
         payloadContainer.innerHTML = sections.map((section) => {
-            const escapedValues = section.values
-                .map((value) => this.escapeHtml(value))
-                .join('<br>');
-            return `<strong style="color: #4299e1;">${section.label}:</strong><br><br>${escapedValues}`;
-        }).join('<br><br>');
+            const items = section.values.map((value) => {
+                const escaped = this.escapeHtml(value);
+                const encoded = encodeURIComponent(value).replace(/'/g, "%27");
+                return `
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.1); padding: 8px 12px; margin-bottom: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                        <code style="word-break: break-all; font-family: monospace; font-size: 0.9rem; flex: 1;">${escaped}</code>
+                        <button type="button" style="background: rgba(255,255,255,0.2); border: none; color: inherit; padding: 4px 10px; border-radius: 4px; cursor: pointer; margin-left: 10px; font-size: 0.8rem; transition: background 0.2s;" 
+                            onclick="navigator.clipboard.writeText(decodeURIComponent('${encoded}')).then(() => { const old = this.innerText; this.innerText = 'Copied!'; setTimeout(() => this.innerText = old, 2000); })"
+                            onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                            Copy
+                        </button>
+                    </div>`;
+            }).join('');
+            return `<div style="margin-bottom: 20px;"><strong style="color: #4299e1; display: block; margin-bottom: 10px;">${section.label}:</strong>${items}</div>`;
+        }).join('');
+    }
+
+    parseCustomHeaders(raw) {
+        const headers = {};
+        raw.split('\n').forEach(line => {
+            const idx = line.indexOf(':');
+            if (idx > 0) {
+                const key = line.substring(0, idx).trim();
+                const value = line.substring(idx + 1).trim();
+                if (key && value) headers[key] = value;
+            }
+        });
+        return headers;
     }
 
     getScanConfig() {
@@ -189,6 +229,7 @@ class SecurityTester {
             proxyUrl: document.getElementById('proxyUrl')?.value.trim() || '',
             scanSpeed: document.getElementById('scanSpeed')?.value || 'normal',
             customEndpoints: this.parseCustomEndpoints(document.getElementById('customEndpoints')?.value || ''),
+            customHeaders: this.parseCustomHeaders(document.getElementById('customHeaders')?.value || ''),
             tests: this.getSelectedTests()
         };
     }
@@ -200,6 +241,7 @@ class SecurityTester {
 
             const saved = JSON.parse(raw);
             this.setFieldValue('customEndpoints', saved.customEndpoints || '');
+            this.setFieldValue('customHeaders', saved.customHeaders || '');
             this.setFieldValue('authToken', saved.authToken || '');
             this.setFieldValue('proxyUrl', saved.proxyUrl || '');
             this.setFieldValue('scanSpeed', saved.scanSpeed || 'normal');
@@ -220,6 +262,7 @@ class SecurityTester {
 
         const payload = {
             customEndpoints: document.getElementById('customEndpoints')?.value || '',
+            customHeaders: document.getElementById('customHeaders')?.value || '',
             authToken: document.getElementById('authToken')?.value || '',
             proxyUrl: document.getElementById('proxyUrl')?.value || '',
             scanSpeed: document.getElementById('scanSpeed')?.value || 'normal',
@@ -521,7 +564,9 @@ class SecurityTester {
             ['testAuth', 'auth'],
             ['testDataMod', 'datamod'],
             ['testCookies', 'cookies'],
-            ['testSubdomains', 'subdomains']
+            ['testSubdomains', 'subdomains'],
+            ['testGraphQL', 'graphql'],
+            ['testOpenRedirect', 'openredirect']
         ];
 
         return testMap.filter(([id]) => this.isChecked(id)).map(([, value]) => value);
@@ -599,6 +644,12 @@ class SecurityTester {
                 break;
             case 'subdomains':
                 await this.testSubdomains();
+                break;
+            case 'graphql':
+                await this.testGraphQL();
+                break;
+            case 'openredirect':
+                await this.testOpenRedirect();
                 break;
             default:
                 this.addResult('warning', 'Unknown Test', `No handler exists for "${testType}".`, '');
@@ -1147,6 +1198,65 @@ class SecurityTester {
         }
     }
 
+    async testGraphQL() {
+        const endpoints = ['/graphql', '/api/graphql', '/v1/graphql', '/v2/graphql', '/gql'];
+        const query = '{"query": "\\n    query IntrospectionQuery {\\n      __schema {\\n        queryType { name }\\n        mutationType { name }\\n        subscriptionType { name }\\n      }\\n    }\\n  "}';
+        let found = false;
+
+        for (const endpoint of endpoints) {
+            const url = new URL(endpoint, this.currentUrl).href;
+            try {
+                const response = await this.makeRequest(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: query,
+                    purpose: 'graphql-introspection'
+                });
+                
+                if (response.ok) {
+                    const text = await response.text();
+                    if (text.includes('__schema') || text.includes('queryType')) {
+                        this.addResult('danger', 'GraphQL Introspection', `GraphQL introspection is ENABLED at ${endpoint}`, 'This allows attackers to query the full API schema, uncovering hidden fields, mutations, and internal data structures.\n\nFix: Disable introspection in your GraphQL server configuration in production.');
+                        found = true;
+                        break;
+                    }
+                }
+            } catch (e) { }
+        }
+
+        if (!found) {
+            this.addResult('success', 'GraphQL Introspection', 'No open GraphQL introspection endpoints found.', 'Endpoints tested: ' + endpoints.join(', '));
+        }
+    }
+
+    async testOpenRedirect() {
+        const params = ['next', 'url', 'redirect', 'return', 'return_to', 'destination', 'goto'];
+        const payload = 'https://example.com';
+        let vulnerable = [];
+
+        for (const param of params) {
+            const testUrl = new URL(this.currentUrl);
+            testUrl.searchParams.set(param, payload);
+            
+            try {
+                // Using fetch with redirect: 'manual' is generally not supported in browsers to read Location,
+                // but we can check if we end up at example.com if redirect is 'follow' or catch opaque responses.
+                // A better browser-safe heuristic for Open Redirect is if the server returns a redirect status.
+                // We'll just append it to the discovered endpoints to flag it.
+                const response = await this.makeRequest(testUrl.href, { purpose: 'open-redirect' });
+                if (response.url.startsWith('https://example.com')) {
+                    vulnerable.push(`?${param}=${payload}`);
+                }
+            } catch (e) { }
+        }
+
+        if (vulnerable.length > 0) {
+            this.addResult('danger', 'Open Redirect', `Potential open redirect found using parameters:`, vulnerable.join('\n') + '\n\nFix: Validate all redirect URLs against an allowlist of trusted domains before redirecting.');
+        } else {
+            this.addResult('success', 'Open Redirect', 'No obvious open redirect vulnerabilities detected.', 'Tested common redirect parameters.');
+        }
+    }
+
     async runStandaloneTool(toolId) {
         const url = (document.getElementById('websiteUrl')?.value || '').trim();
         if (!url || !this.isValidUrl(url)) {
@@ -1214,6 +1324,66 @@ class SecurityTester {
         return findings.join('\n');
     }
 
+    async runRequestBomberTool() {
+        const target = this.currentUrl;
+        if (!target) return 'No target URL selected.';
+        
+        let count = prompt("Enter number of requests to send (e.g. 100):", "50");
+        if (count === null) return "Bomber cancelled.";
+        count = parseInt(count, 10);
+        
+        let concurrency = prompt("Enter concurrent connections (e.g. 10):", "10");
+        if (concurrency === null) return "Bomber cancelled.";
+        concurrency = parseInt(concurrency, 10);
+        
+        if (isNaN(count) || count <= 0 || isNaN(concurrency) || concurrency <= 0) {
+            alert('Invalid input. Must be positive numbers.');
+            return 'Invalid parameters provided to Request Bomber.';
+        }
+
+        if (count > 1000) {
+            if (!confirm(`Warning: You are about to send ${count} requests. This may cause browser instability or trigger anti-bot measures. Continue?`)) {
+                return 'Bomber cancelled by user.';
+            }
+        }
+
+        this.updateToolStatus(`Bomber started: sending ${count} requests to ${target} with concurrency ${concurrency}...`);
+        
+        let completed = 0;
+        let successes = 0;
+        let failures = 0;
+        let i = 0;
+        const limit = concurrency;
+        
+        const worker = async () => {
+            while (i < count) {
+                i++;
+                try {
+                    // Use no-cors to aggressively send requests without being blocked by CORS preflights
+                    await fetch(target, { method: 'GET', mode: 'no-cors', cache: 'no-store' });
+                    successes++;
+                } catch (e) {
+                    failures++;
+                }
+                completed++;
+                if (completed % 20 === 0 || completed === count) {
+                    this.updateToolStatus(`Bomber progress: ${completed}/${count} (${failures} local network failures)`);
+                }
+            }
+        };
+
+        const workers = [];
+        for (let w = 0; w < limit; w++) {
+            workers.push(worker());
+        }
+        
+        await Promise.all(workers);
+        
+        const msg = `Bomber finished! Total triggered: ${count}. (Note: Response status is intentionally opaque due to no-cors mode, but ${failures} local network failures occurred).`;
+        this.addResult(failures > 0 ? 'warning' : 'success', 'Request Bomber', `Sent ${count} concurrent requests to ${target}`, msg);
+        return msg;
+    }
+
     async makeRequest(url, options = {}) {
         const normalizedUrl = this.normalizeUrl(url);
         if (!normalizedUrl) {
@@ -1222,6 +1392,15 @@ class SecurityTester {
 
         const headers = new Headers(options.headers || {});
         const config = this.getScanConfig();
+        
+        if (config.customHeaders) {
+            Object.entries(config.customHeaders).forEach(([key, value]) => {
+                if (!headers.has(key)) {
+                    headers.set(key, value);
+                }
+            });
+        }
+
         if (config.authToken && !headers.has('Authorization')) {
             headers.set('Authorization', config.authToken.startsWith('Bearer ') ? config.authToken : `Bearer ${config.authToken}`);
         }
