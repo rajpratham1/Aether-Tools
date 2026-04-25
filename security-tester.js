@@ -1,5 +1,8 @@
 class SecurityTester {
     constructor() {
+        this.storageKeys = {
+            advancedConfig: 'aetherScannerAdvancedConfig'
+        };
         this.defaultTestState = {
             headers: true,
             ssl: true,
@@ -87,8 +90,10 @@ class SecurityTester {
 
         this.resetState();
         this.initializeEventListeners();
+        this.loadSavedConfig();
         this.renderToolCards();
         this.renderPayloadLibrary();
+        this.updateAdvancedConfigStatus('Settings are temporary by default. Save them only on a device you control.');
     }
 
     resetState() {
@@ -111,6 +116,7 @@ class SecurityTester {
     initializeEventListeners() {
         const startButton = document.getElementById('startTest');
         const urlInput = document.getElementById('websiteUrl');
+        const persistToggle = document.getElementById('persistAdvancedSettings');
 
         if (startButton) {
             startButton.addEventListener('click', () => this.startSecurityTest());
@@ -121,6 +127,15 @@ class SecurityTester {
                 if (event.key === 'Enter') {
                     this.startSecurityTest();
                 }
+            });
+        }
+
+        if (persistToggle) {
+            persistToggle.addEventListener('change', () => {
+                const message = persistToggle.checked
+                    ? 'Remember mode is enabled. Use "Save Settings" to store the current advanced configuration in this browser.'
+                    : 'Remember mode is off. New scans will use temporary settings unless you save them again.';
+                this.updateAdvancedConfigStatus(message);
             });
         }
     }
@@ -176,6 +191,70 @@ class SecurityTester {
             customEndpoints: this.parseCustomEndpoints(document.getElementById('customEndpoints')?.value || ''),
             tests: this.getSelectedTests()
         };
+    }
+
+    loadSavedConfig() {
+        try {
+            const raw = localStorage.getItem(this.storageKeys.advancedConfig);
+            if (!raw) return;
+
+            const saved = JSON.parse(raw);
+            this.setFieldValue('customEndpoints', saved.customEndpoints || '');
+            this.setFieldValue('authToken', saved.authToken || '');
+            this.setFieldValue('proxyUrl', saved.proxyUrl || '');
+            this.setFieldValue('scanSpeed', saved.scanSpeed || 'normal');
+            this.setCheckboxValue('persistAdvancedSettings', Boolean(saved.persistAdvancedSettings));
+            this.updateAdvancedConfigStatus('Saved advanced settings were loaded from this browser.');
+        } catch (error) {
+            this.updateAdvancedConfigStatus('Saved advanced settings could not be read. The scanner will use temporary settings.');
+        }
+    }
+
+    saveAdvancedSettings() {
+        const persist = this.isChecked('persistAdvancedSettings');
+        if (!persist) {
+            localStorage.removeItem(this.storageKeys.advancedConfig);
+            this.updateAdvancedConfigStatus('Remember mode is off, so settings were kept temporary and nothing was stored.');
+            return;
+        }
+
+        const payload = {
+            customEndpoints: document.getElementById('customEndpoints')?.value || '',
+            authToken: document.getElementById('authToken')?.value || '',
+            proxyUrl: document.getElementById('proxyUrl')?.value || '',
+            scanSpeed: document.getElementById('scanSpeed')?.value || 'normal',
+            persistAdvancedSettings: true
+        };
+
+        localStorage.setItem(this.storageKeys.advancedConfig, JSON.stringify(payload));
+        this.updateAdvancedConfigStatus('Advanced settings were saved in local browser storage on this device.');
+    }
+
+    clearAdvancedSettings() {
+        localStorage.removeItem(this.storageKeys.advancedConfig);
+        this.setFieldValue('customEndpoints', '');
+        this.setFieldValue('authToken', '');
+        this.setFieldValue('proxyUrl', '');
+        this.setFieldValue('scanSpeed', 'normal');
+        this.setCheckboxValue('persistAdvancedSettings', false);
+        this.updateAdvancedConfigStatus('Saved advanced settings were removed from this browser.');
+    }
+
+    updateAdvancedConfigStatus(message) {
+        const node = document.getElementById('advancedConfigStatus');
+        if (node) {
+            node.textContent = message;
+        }
+    }
+
+    setFieldValue(id, value) {
+        const field = document.getElementById(id);
+        if (field) field.value = value;
+    }
+
+    setCheckboxValue(id, value) {
+        const field = document.getElementById(id);
+        if (field) field.checked = value;
     }
 
     parseCustomEndpoints(rawValue) {
@@ -1527,4 +1606,6 @@ class SecurityTester {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.securityTester = new SecurityTester();
+    window.saveAdvancedSettings = () => window.securityTester?.saveAdvancedSettings();
+    window.clearAdvancedSettings = () => window.securityTester?.clearAdvancedSettings();
 });

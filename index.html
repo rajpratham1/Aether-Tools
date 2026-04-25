@@ -137,6 +137,7 @@
             font-weight: 700;
             margin-bottom: 40px;
             background: var(--accent-grad);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -860,6 +861,45 @@
         // --- WEATHER & AQI ---
         const API_KEY = '400fe231827dcfb7820a4bae569869d1';
         const cityInput = document.getElementById('cityInput');
+        function getWeatherApiKey() {
+            return localStorage.getItem(WEATHER_KEY_STORAGE) || '';
+        }
+        function setWeatherApiStatus(message) {
+            if (weatherApiStatus) weatherApiStatus.textContent = message;
+        }
+        function resetWeatherCards(message = 'Add your OpenWeather API key to enable live weather and AQI data.') {
+            document.getElementById('temp').textContent = '--°C';
+            document.getElementById('cityName').textContent = '--';
+            document.getElementById('condition').textContent = message;
+            document.getElementById('weatherIcon').removeAttribute('src');
+            document.getElementById('humidity').textContent = '--%';
+            document.getElementById('wind').textContent = '-- m/s';
+            document.getElementById('pressure').textContent = '-- hPa';
+            document.getElementById('rain').textContent = '-- mm';
+            document.getElementById('aqiScore').textContent = '--';
+            document.getElementById('aqiStatusText').textContent = 'Setup Needed';
+            document.getElementById('aqiStatusText').style.background = '#6b7280';
+            document.getElementById('pm25').textContent = '-- µg/m³';
+            document.getElementById('pm10').textContent = '-- µg/m³';
+            document.getElementById('co').textContent = '-- µg/m³';
+            document.getElementById('no2').textContent = '-- µg/m³';
+            document.getElementById('o3').textContent = '-- µg/m³';
+        }
+        function configureWeatherApiKey() {
+            const currentValue = getWeatherApiKey();
+            const nextValue = prompt('Enter your OpenWeather API key. Leave blank and press OK to remove the saved key.', currentValue);
+            if (nextValue === null) return;
+            const trimmed = nextValue.trim();
+            if (trimmed) {
+                localStorage.setItem(WEATHER_KEY_STORAGE, trimmed);
+                setWeatherApiStatus('OpenWeather API key saved locally in this browser only.');
+                fetchWeather(localStorage.getItem('aetherCity') || cityInput.value || 'London');
+            } else {
+                localStorage.removeItem(WEATHER_KEY_STORAGE);
+                setWeatherApiStatus('OpenWeather API key removed. Live weather is now disabled until you add a new one.');
+                resetWeatherCards();
+            }
+        }
         async function fetchWeather(q, lat, lon) {
             try {
                 let url = lat ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}` : `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&appid=${API_KEY}`;
@@ -868,6 +908,8 @@
                 const data = await res.json();
                 document.getElementById('temp').textContent = Math.round(data.main.temp) + "°C";
                 document.getElementById('cityName').textContent = data.name;
+                document.getElementById('temp').textContent = `${Math.round(data.main.temp)}°C`;
+                document.getElementById('temp').textContent = `${Math.round(data.main.temp)}°C`;
                 document.getElementById('condition').textContent = data.weather[0].description;
                 document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
                 document.getElementById('humidity').textContent = data.main.humidity + "%";
@@ -890,6 +932,16 @@
             document.getElementById('co').textContent = aqi.components.co + " µg/m³";
             document.getElementById('no2').textContent = aqi.components.no2 + " µg/m³";
             document.getElementById('o3').textContent = aqi.components.o3 + " µg/m³";
+            document.getElementById('pm25').textContent = `${aqi.components.pm2_5} µg/m³`;
+            document.getElementById('pm10').textContent = `${aqi.components.pm10} µg/m³`;
+            document.getElementById('co').textContent = `${aqi.components.co} µg/m³`;
+            document.getElementById('no2').textContent = `${aqi.components.no2} µg/m³`;
+            document.getElementById('o3').textContent = `${aqi.components.o3} µg/m³`;
+            document.getElementById('pm25').textContent = `${aqi.components.pm2_5} µg/m³`;
+            document.getElementById('pm10').textContent = `${aqi.components.pm10} µg/m³`;
+            document.getElementById('co').textContent = `${aqi.components.co} µg/m³`;
+            document.getElementById('no2').textContent = `${aqi.components.no2} µg/m³`;
+            document.getElementById('o3').textContent = `${aqi.components.o3} µg/m³`;
         }
         function getWeather() { if(cityInput.value) fetchWeather(cityInput.value); }
         function getLocationWeather() { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p => fetchWeather(null, p.coords.latitude, p.coords.longitude)); }

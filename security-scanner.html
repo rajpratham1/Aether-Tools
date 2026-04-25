@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Security Scanner - Enterprise Edition</title>
+    <meta name="description" content="Aether Tools Security Scanner runs browser-based security checks for headers, SSL, CORS, endpoints, technology detection, and exportable reports.">
+    <meta name="keywords" content="Aether Tools security scanner, website security scanner, browser security checks, CVSS scanner, vulnerability assessment">
+    <meta name="author" content="Pratham Kumar">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#6c5ce7">
+    <meta name="application-name" content="Aether Tools">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rajpratham1.github.io/Aether-Tools/security-scanner.html">
+    <meta property="og:title" content="Aether Tools Security Scanner">
+    <meta property="og:description" content="Run browser-based website security checks with endpoint discovery, CVSS scoring, exports, and guided advanced configuration.">
+    <meta property="og:site_name" content="Aether Tools">
+    <meta property="og:image" content="https://rajpratham1.github.io/Aether-Tools/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Aether Tools Security Scanner">
+    <meta name="twitter:description" content="Run browser-based website security checks with endpoint discovery, CVSS scoring, exports, and guided advanced configuration.">
+    <meta name="twitter:image" content="https://rajpratham1.github.io/Aether-Tools/preview.png">
+    <link rel="canonical" href="https://rajpratham1.github.io/Aether-Tools/security-scanner.html">
+    <link rel="icon" type="image/png" href="preview.png">
+    <link rel="apple-touch-icon" href="preview.png">
     <style>
         * {
             margin: 0;
@@ -46,6 +65,21 @@
         .header p {
             font-size: 1.3em;
             opacity: 0.95;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(15, 20, 25, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
         .tabs {
@@ -214,6 +248,148 @@
             color: #a0aec0;
             font-size: 14px;
             line-height: 1.6;
+        }
+
+        .feature-card input,
+        .feature-card textarea,
+        .feature-card select {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #4a5568;
+            background: #1a1f2e;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .feature-card textarea {
+            min-height: 110px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        .feature-card input:focus,
+        .feature-card textarea:focus,
+        .feature-card select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+        }
+
+        .field-help {
+            margin-top: 8px;
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .config-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .config-status {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(66, 153, 225, 0.25);
+            background: rgba(66, 153, 225, 0.08);
+            color: #bfdbfe;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .config-toggle {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #4a5568;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .config-toggle label {
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1.6;
+            cursor: pointer;
+        }
+
+        .brochure {
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                radial-gradient(circle at top right, rgba(231, 76, 60, 0.20), transparent 32%),
+                radial-gradient(circle at bottom left, rgba(66, 153, 225, 0.20), transparent 38%),
+                linear-gradient(145deg, rgba(17, 24, 39, 0.96), rgba(30, 41, 59, 0.92));
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+        }
+
+        .brochure h3 {
+            color: #f8fafc;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .brochure > p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            max-width: 900px;
+        }
+
+        .brochure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .brochure-card {
+            padding: 18px;
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.66);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .brochure-step {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4299e1, #e74c3c);
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .brochure-card h4 {
+            color: #f8fafc;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .brochure-card p {
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .brochure-note {
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+            color: #fca5a5;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         .test-options {
@@ -528,6 +704,86 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #2d3748;
         }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 12px;
+            }
+
+            .header,
+            .tab-content,
+            .main-content {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2.1em;
+            }
+
+            .header p {
+                font-size: 1.05em;
+            }
+
+            .input-group,
+            .config-actions {
+                flex-direction: column;
+            }
+
+            .test-btn,
+            .action-btn {
+                width: 100%;
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 8px;
+            }
+
+            .container {
+                border-radius: 12px;
+            }
+
+            .header h1 {
+                font-size: 1.75em;
+                line-height: 1.25;
+            }
+
+            .tab {
+                padding: 14px 18px;
+                font-size: 13px;
+            }
+
+            .feature-grid,
+            .test-options,
+            .brochure-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .url-input {
+                min-width: 0;
+            }
+
+            .test-result h3 {
+                flex-wrap: wrap;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .network-request,
+            .endpoint-item,
+            .code-block,
+            .vulnerability-details pre {
+                word-break: break-word;
+                white-space: pre-wrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -702,6 +958,50 @@
                             <span class="summary-number" id="securityScore">0%</span>
                             <span>Security Score</span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="config-toggle">
+                    <input type="checkbox" id="persistAdvancedSettings">
+                    <label for="persistAdvancedSettings"><strong>Remember advanced settings on this device</strong><br>Enable this only on a device you control. When checked, the scanner can store your proxy URL, speed, custom endpoints, and optional auth token in local browser storage for future sessions.</label>
+                </div>
+
+                <div class="config-actions">
+                    <button class="action-btn primary" onclick="saveAdvancedSettings()">Save Settings</button>
+                    <button class="action-btn" onclick="clearAdvancedSettings()">Clear Saved Settings</button>
+                </div>
+
+                <div class="config-status" id="advancedConfigStatus">Settings are temporary by default. Save them only on a device you control.</div>
+
+                <div class="brochure">
+                    <h3>Advanced Configuration Guide</h3>
+                    <p>This scanner runs inside the browser, so the strongest results come from using the right mode at the right time. Use this quick brochure when you need better accuracy without exposing secrets in public code.</p>
+
+                    <div class="brochure-grid">
+                        <div class="brochure-card">
+                            <div class="brochure-step">1</div>
+                            <h4>Run A Direct Scan First</h4>
+                            <p>Start with a normal scan to see what any visitor can reach. This gives you the public attack surface before you add authentication or a relay proxy.</p>
+                        </div>
+                        <div class="brochure-card">
+                            <div class="brochure-step">2</div>
+                            <h4>Add Auth Only When Needed</h4>
+                            <p>Use the authentication field for protected API routes or admin areas. The field stays local to the browser unless you explicitly save it on your own device.</p>
+                        </div>
+                        <div class="brochure-card">
+                            <div class="brochure-step">3</div>
+                            <h4>Use A Trusted Proxy</h4>
+                            <p>A relay proxy can help with CORS and missing response headers, but it can also see what your browser sends. Use only a proxy you operate or fully trust.</p>
+                        </div>
+                        <div class="brochure-card">
+                            <div class="brochure-step">4</div>
+                            <h4>Export Reports, Not Secrets</h4>
+                            <p>Keep scan reports, discovered endpoints, and remediation notes. Do not hardcode private API keys, tokens, or backend credentials in static sites or public repositories.</p>
+                        </div>
+                    </div>
+
+                    <div class="brochure-note">
+                        Accuracy note: GitHub Pages cannot securely hide a real private API key. If you need protected integrations, move the secret handling to your own server-side function or relay.
                     </div>
                 </div>
             </div>
@@ -1201,7 +1501,115 @@
             }
         }
 
+        function normalizeScannerUi() {
+            const textUpdates = [
+                ['.header h1', 'Professional Security Scanner'],
+                ['.header p', 'Enterprise-grade vulnerability assessment, CVSS scoring, and exportable reports.'],
+                ['#startTest', 'Start Deep Scan'],
+                ['.action-btn.primary', 'Quick Scan'],
+                ['.action-btn.success[onclick="exportReport(\'pdf\')"]', 'Export PDF'],
+                ['.action-btn.success[onclick="exportReport(\'json\')"]', 'Export JSON'],
+                ['.action-btn.warning', 'Save'],
+                ['.action-buttons .action-btn:last-child', 'Clear'],
+                ['#networkMonitor h3', 'Network Activity Monitor'],
+                ['#discoveredEndpoints h3', 'Discovered Endpoints'],
+                ['#techDetection h3', 'Technology Stack Detected'],
+                ['#summarySection h2', 'Security Assessment Summary'],
+                ['#reports h2', 'Export Reports'],
+                ['#history h2', 'Scan History'],
+                ['#advanced h2', 'Advanced Configuration'],
+                ['#payloads h2', 'Attack Payloads Library'],
+                ['#compare h2', 'Compare Websites'],
+                ['#compare .test-btn', 'Compare'],
+                ['#tools h2', 'Security Tools']
+            ];
+
+            textUpdates.forEach(([selector, value]) => {
+                const node = document.querySelector(selector);
+                if (node) node.textContent = value;
+            });
+
+            const featureTitles = Array.from(document.querySelectorAll('#scanner .feature-card h3'));
+            const featureLabels = ['Deep Scan', 'CVSS Scoring', 'Network Monitor', 'Payload Library'];
+            featureTitles.forEach((node, index) => {
+                if (featureLabels[index]) node.textContent = featureLabels[index];
+            });
+
+            const reportButtons = document.querySelectorAll('#reports .action-btn.success');
+            ['PDF Report', 'JSON Data', 'HTML Report', 'CSV Export', 'XML Export'].forEach((label, index) => {
+                if (reportButtons[index]) reportButtons[index].textContent = label;
+            });
+
+            const advancedCards = document.querySelectorAll('#advanced .feature-card');
+            if (advancedCards[0]) {
+                const title = advancedCards[0].querySelector('h3');
+                if (title) title.textContent = 'Custom Endpoints';
+                const textarea = advancedCards[0].querySelector('textarea');
+                if (textarea) textarea.removeAttribute('style');
+                if (!advancedCards[0].querySelector('.field-help')) {
+                    const help = document.createElement('div');
+                    help.className = 'field-help';
+                    help.textContent = 'Add extra routes you want the scanner to probe in addition to its built-in discovery list.';
+                    advancedCards[0].appendChild(help);
+                }
+            }
+
+            if (advancedCards[1]) {
+                const title = advancedCards[1].querySelector('h3');
+                const input = advancedCards[1].querySelector('input');
+                if (title) title.textContent = 'Authentication';
+                if (input) {
+                    input.type = 'password';
+                    input.removeAttribute('style');
+                }
+                if (!advancedCards[1].querySelector('.field-help')) {
+                    const help = document.createElement('div');
+                    help.className = 'field-help';
+                    help.textContent = 'Used only for your current scan unless you explicitly choose to save settings on this device.';
+                    advancedCards[1].appendChild(help);
+                }
+            }
+
+            if (advancedCards[2]) {
+                const title = advancedCards[2].querySelector('h3');
+                const select = advancedCards[2].querySelector('select');
+                if (title) title.textContent = 'Scan Speed';
+                if (select) select.removeAttribute('style');
+                if (!advancedCards[2].querySelector('.field-help')) {
+                    const help = document.createElement('div');
+                    help.className = 'field-help';
+                    help.textContent = 'Use slower modes when you want cleaner logs on the target or you are testing against a fragile environment.';
+                    advancedCards[2].appendChild(help);
+                }
+            }
+
+            if (advancedCards[3]) {
+                const title = advancedCards[3].querySelector('h3');
+                const input = advancedCards[3].querySelector('input');
+                if (title) title.textContent = 'Proxy Settings';
+                if (input) {
+                    input.type = 'url';
+                    input.removeAttribute('style');
+                }
+                if (!advancedCards[3].querySelector('.field-help')) {
+                    const help = document.createElement('div');
+                    help.className = 'field-help';
+                    help.textContent = 'Use a trusted relay proxy if you need CORS bypassing or full header visibility for external domains.';
+                    advancedCards[3].appendChild(help);
+                }
+            }
+
+            const advancedMain = document.querySelector('#advanced .main-content');
+            ['.config-toggle', '.config-actions', '.config-status', '.brochure'].forEach((selector) => {
+                const node = document.querySelector(selector);
+                if (advancedMain && node && !advancedMain.contains(node)) {
+                    advancedMain.appendChild(node);
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            normalizeScannerUi();
             loadHistory();
         });
     </script>
